@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 import {
+  SELECT_BRAND,
+  SELECT_TYPE,
   SET_AUTH,
   SET_BRANDS,
   SET_DEVICES,
@@ -11,10 +13,14 @@ const initialAuthState = { user: "", isAuth: false };
 const initialTypesState = [
   { id: 1, name: "Холодильники" },
   { id: 2, name: "Смартфоны" },
+  { id: 3, name: "Ноутбуки" },
+  { id: 4, name: "Телевизоры" },
 ];
 const initialBrandsState = [
   { id: "1", name: "Apple" },
   { id: "2", name: "Samsung" },
+  { id: "3", name: "Lenovo" },
+  { id: "4", name: "Asus" },
 ];
 const initialDevicesState = [
   {
@@ -38,6 +44,13 @@ const initialDevicesState = [
     rating: 5,
     img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
   },
+  {
+    id: "4",
+    name: "Iphone 12 pro",
+    price: 25000,
+    rating: 5,
+    img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
+  },
 ];
 
 const authReducer = (state = initialAuthState, action) => {
@@ -56,12 +69,26 @@ const typesReducer = (state = initialTypesState, action) => {
   }
   return state;
 };
+const selectedTypeReducer = (state = {}, action) => {
+  if (action.type === SELECT_TYPE) {
+    return action.payload;
+  }
+  return state;
+};
 const brandsReducer = (state = initialBrandsState, action) => {
   if (action.type === SET_BRANDS) {
     return action.payload;
   }
   return state;
 };
+
+const selectedBrandReducer = (state = {}, action) => {
+  if (action.type === SELECT_BRAND) {
+    return action.payload;
+  }
+  return state;
+};
+
 const devicesReducer = (state = initialDevicesState, action) => {
   if (action.type === SET_DEVICES) {
     return action.payload;
@@ -74,4 +101,6 @@ export const rootReducer = combineReducers({
   types: typesReducer,
   brands: brandsReducer,
   devices: devicesReducer,
+  selectedType: selectedTypeReducer,
+  selectedBrand: selectedBrandReducer,
 });

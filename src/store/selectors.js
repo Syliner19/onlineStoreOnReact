@@ -16,3 +16,9 @@ export const selectBrands = (state) => {
 export const selectDevices = (state) => {
   return state.devices;
 };
+export const selectSelectedType = (state) => {
+  return state.selectedType;
+};
+export const selectSelectedBrand = (state) => {
+  return state.selectedBrand;
+};
