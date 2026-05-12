@@ -2,14 +2,15 @@ import React, { memo } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink } from "react-router-dom";
-import { SHOP_ROUTE } from "../utils/const";
+import { NavLink, useNavigate } from "react-router-dom";
+import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/const";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsAuth } from "../store/selectors";
 import { setAuth } from "../store/actions";
 
 const NavBar = memo(() => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
   return (
@@ -20,9 +21,22 @@ const NavBar = memo(() => {
         </NavLink>
         {isAuth ? (
           <Nav className="ms-auto" style={{ color: "white" }}>
-            <Button variant={"outline-light"}>Админ панель</Button>
-            <Button variant={"outline-light"} className="ms-2">
-              Войти
+            <Button
+              variant={"outline-light"}
+              onClick={() => {
+                navigate(ADMIN_ROUTE);
+              }}
+            >
+              Админ панель
+            </Button>
+            <Button
+              variant={"outline-light"}
+              className="ms-2"
+              onClick={() => {
+                navigate(LOGIN_ROUTE);
+              }}
+            >
+              Выйти
             </Button>
           </Nav>
         ) : (

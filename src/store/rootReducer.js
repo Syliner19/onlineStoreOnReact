@@ -9,7 +9,7 @@ import {
   SET_USER,
 } from "./consts";
 
-const initialAuthState = { user: "", isAuth: false };
+const initialAuthState = { user: "", isAuth: true };
 const initialTypesState = [
   { id: 1, name: "Холодильники" },
   { id: 2, name: "Смартфоны" },
