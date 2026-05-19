@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigStar from "../assets/bigStar.png";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { selectDeviceById } from "../store/selectors";
+import { fetchDeviceByIdApi } from "../http/deviceAPI";
 
 const DevicePage = () => {
-  const device = {
-    id: "1",
-    name: "Iphone 12 pro",
-    price: 25000,
-    rating: 5,
-    img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
-  };
-  const descrition = [
-    { id: 1, title: "Оперативная память", description: "5 гб" },
-    { id: 2, title: "Камера", description: "12 мп" },
-    { id: 3, title: "Процессор", description: "Пентиум 3" },
-    { id: 4, title: "Кол-во ядер", description: "2" },
-    { id: 5, title: "Аккумулятор", description: "4000" },
-  ];
+  const { id } = useParams();
+  const [device, setDevice] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    setErrorMessage("");
+    setIsLoading(true);
+    fetchDeviceByIdApi(id)
+      .then((resp) => setDevice(resp))
+      .catch(({ response }) => setErrorMessage(response.data.message))
+      .finally(() => setIsLoading(false));
+  }, []);
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
+  if (!device) {
+    return <div style={{ color: "red" }}>{errorMessage}</div>;
+  }
+  const { description } = device;
   return (
     <Container className="mt-3">
       <Row>
@@ -57,7 +66,7 @@ const DevicePage = () => {
       </Row>
       <Row className="d-flex flex-column m-3">
         <h1>Характеристики</h1>
-        {descrition.map((info, index) => (
+        {description.map((info, index) => (
           <Row
             key={info.id}
             style={{
@@ -65,7 +74,7 @@ const DevicePage = () => {
               padding: 10,
             }}
           >
-            {info.title}: {info.description}
+            {info.title}: {info.value}
           </Row>
         ))}
       </Row>

@@ -5,3 +5,5 @@ export const SET_TYPES = "SET_TYPES";
 export const SET_BRANDS = "SET_BRANDS";
 export const SELECT_TYPE = "SELECT_TYPE";
 export const SELECT_BRAND = "SELECT_BRAND";
+export const ADD_TYPE = "ADD_TYPE";
+export const ADD_BRAND = "ADD_BRAND";

@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBrands, selectSelectedBrand } from "../store/selectors";
 import { Card, Row } from "react-bootstrap";
-import { setSelectBrand } from "../store/actions";
+import { setBrands, setSelectBrand } from "../store/actions";
+import { fetchBrandApi } from "../http/deviceAPI";
 
 const BrandBar = () => {
-  const brands = useSelector(selectBrands);
   const selectedBrand = useSelector(selectSelectedBrand);
   const dispatch = useDispatch();
+  useEffect(() => {
+    fetchBrandApi()
+      .then((brandsFromApi) => dispatch(setBrands(brandsFromApi)))
+      .catch((e) => console.log(e));
+  }, [dispatch]);
+  const brands = useSelector(selectBrands);
   console.log(selectedBrand);
   return (
     <div className="d-flex flex-wrap gap-2">

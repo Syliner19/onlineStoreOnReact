@@ -12,13 +12,14 @@ import {
   SHOP_ROUTE,
 } from "./utils/const";
 
-export const authRoutes = [
-  { path: ADMIN_ROUTE, element: <AdminPage /> },
-  { path: BASKET_ROUTE, element: <Basket /> },
-];
+export const authRoutes = [{ path: BASKET_ROUTE, element: <Basket /> }];
 export const publicRoutes = [
   { path: SHOP_ROUTE, element: <Shop /> },
   { path: DEVICE_ROUTE + `/:id`, element: <DevicePage /> },
   { path: REGISTRATION_ROUTE, element: <Auth /> },
   { path: LOGIN_ROUTE, element: <Auth /> },
+];
+export const adminRoutes = [
+  { path: ADMIN_ROUTE, element: <AdminPage /> },
+  { path: BASKET_ROUTE, element: <Basket /> },
 ];

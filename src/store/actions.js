@@ -1,4 +1,6 @@
 import {
+  ADD_BRAND,
+  ADD_TYPE,
   SELECT_BRAND,
   SELECT_TYPE,
   SET_AUTH,
@@ -29,4 +31,10 @@ export const setBrands = (brands) => {
 };
 export const setSelectBrand = (brand) => {
   return { type: SELECT_BRAND, payload: brand };
+};
+export const addType = (type) => {
+  return { type: ADD_TYPE, payload: type };
+};
+export const addBrand = (brand) => {
+  return { type: ADD_BRAND, payload: brand };
 };

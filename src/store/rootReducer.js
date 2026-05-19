@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 import {
+  ADD_BRAND,
+  ADD_TYPE,
   SELECT_BRAND,
   SELECT_TYPE,
   SET_AUTH,
@@ -9,49 +11,18 @@ import {
   SET_USER,
 } from "./consts";
 
-const initialAuthState = { user: "", isAuth: true };
+const initialAuthState = {
+  user: { id: "", email: "", role: "" },
+  isAuth: false,
+};
 const initialTypesState = [
   { id: 1, name: "Холодильники" },
   { id: 2, name: "Смартфоны" },
   { id: 3, name: "Ноутбуки" },
   { id: 4, name: "Телевизоры" },
 ];
-const initialBrandsState = [
-  { id: "1", name: "Apple" },
-  { id: "2", name: "Samsung" },
-  { id: "3", name: "Lenovo" },
-  { id: "4", name: "Asus" },
-];
-const initialDevicesState = [
-  {
-    id: "1",
-    name: "Iphone 12 pro",
-    price: 25000,
-    rating: 5,
-    img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
-  },
-  {
-    id: "2",
-    name: "Iphone 12 pro",
-    price: 25000,
-    rating: 5,
-    img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
-  },
-  {
-    id: "3",
-    name: "Iphone 12 pro",
-    price: 25000,
-    rating: 5,
-    img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
-  },
-  {
-    id: "4",
-    name: "Iphone 12 pro",
-    price: 25000,
-    rating: 5,
-    img: "https://msk-apple.ru/image/cache/catalog/apple12/apple%2012%20pro/apple12pro_white_1-700x700.jpg",
-  },
-];
+const initialBrandsState = [];
+const initialDevicesState = [];
 
 const authReducer = (state = initialAuthState, action) => {
   if (action.type === SET_AUTH) {
@@ -67,6 +38,15 @@ const typesReducer = (state = initialTypesState, action) => {
   if (action.type === SET_TYPES) {
     return action.payload;
   }
+  if (action.type === ADD_TYPE) {
+    console.log(action.payload);
+    console.log(state);
+    const isTypeExist = state.some((type) => type.name === action.payload.name);
+    if (isTypeExist) {
+      return state;
+    }
+    return [...state, action.payload];
+  }
   return state;
 };
 const selectedTypeReducer = (state = {}, action) => {
@@ -78,6 +58,17 @@ const selectedTypeReducer = (state = {}, action) => {
 const brandsReducer = (state = initialBrandsState, action) => {
   if (action.type === SET_BRANDS) {
     return action.payload;
+  }
+  if (action.type === ADD_BRAND) {
+    console.log(action.payload);
+    console.log(state);
+    const isBrandExist = state.some(
+      (brand) => brand.name === action.payload.name,
+    );
+    if (isBrandExist) {
+      return state;
+    }
+    return [...state, action.payload];
   }
   return state;
 };
