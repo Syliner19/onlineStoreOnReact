@@ -5,7 +5,7 @@ import star from "../assets/star.png";
 const DeviceItem = ({ device }) => {
   return (
     <Card style={{ width: "150px", cursor: "pointer" }} border="light">
-      <Image width="100%" height={150} src={device.img} />
+      <Image width="100%" height={150} src={`${device.img}`} />
       <div className=" text-black-50 d-flex justify-content-between align-items-center mt-2">
         <div>Samsung...</div>
         <div className="d-flex align-items-center">

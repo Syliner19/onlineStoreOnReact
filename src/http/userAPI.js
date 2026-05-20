@@ -1,8 +1,10 @@
 import axios from "axios";
 import {
+  COMPLETE_REGISTRATION_ROUTE,
   LOGIN_ROUTE,
   LOGOUT_ROUTE,
   REGISTRATION_ROUTE,
+  ROLES_ROUTE,
   USER_ROUTE,
 } from "../utils/const.js";
 export const registration = async (email, password) => {
@@ -28,20 +30,33 @@ export const logout = () => {
   return axios.post(`/api${LOGOUT_ROUTE}`);
 };
 
-const check = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    throw new Error("Пользователь не авторизован");
-  }
-  const tokenParts = token.split("-");
-  const userId = tokenParts[1];
-  if (!userId) {
-    throw new Error("Невалидный токен");
-  }
-  const response = await $authHost.get(`users/${userId}`);
-  return response.data;
+export const user = async () => {
+  return axios.get(`/api${USER_ROUTE}`).then((response) => response.data.user);
 };
 
-export const user = () => {
-  return axios.get(`/api${USER_ROUTE}`).then((r) => r.data.user);
+export const fetchRoles = async () => {
+  return axios
+    .get(`/api${ROLES_ROUTE}`)
+    .then((response) => response.data.roles);
+};
+export const addUserApi = async (email, role) => {
+  try {
+    const response = await axios.post(`/api${USER_ROUTE}`, {
+      email,
+      password: null,
+      role,
+    });
+    console.log(response);
+    console.log(response.data.message);
+    return response.data;
+  } catch (e) {
+    console.log("Ошибка");
+    throw e;
+  }
+};
+export const confirmPasswordApi = async (email, password) => {
+  return axios.post(
+    `/api${COMPLETE_REGISTRATION_ROUTE}?email=${encodeURIComponent(email)}`,
+    { password },
+  );
 };

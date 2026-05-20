@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDevices,
@@ -6,12 +6,18 @@ import {
   selectTypes,
 } from "../store/selectors";
 import { ListGroup } from "react-bootstrap";
-import { setSelectType } from "../store/actions";
+import { setSelectType, setTypes } from "../store/actions";
+import { fetchTypesApi } from "../http/deviceAPI";
 
 const TypeBar = () => {
   const dispatch = useDispatch();
   const types = useSelector(selectTypes);
   const selectedType = useSelector(selectSelectedType);
+  useEffect(() => {
+    fetchTypesApi()
+      .then((brandsFromApi) => dispatch(setTypes(brandsFromApi)))
+      .catch((e) => console.log(e));
+  }, [dispatch]);
   console.log(selectedType);
   return (
     <ListGroup>

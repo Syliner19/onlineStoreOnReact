@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,6 +11,7 @@ import { setDevices } from "../../store/actions";
 
 const CreateDevice = ({ show, onHide }) => {
   const dispatch = useDispatch();
+  const devices = useSelector(selectDevices);
   const types = useSelector(selectTypes);
   const brands = useSelector(selectBrands);
   const [name, setName] = useState("");
@@ -20,8 +21,35 @@ const CreateDevice = ({ show, onHide }) => {
   const [brand, setBrand] = useState("Выберите бренд");
   const [description, setDescription] = useState([]);
   const [imageFile, setImageFile] = useState(null);
+  const fileInputRef = useRef(null);
   console.log(description);
   console.log(imageFile);
+  const clearInputFile = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      setImageFile(null);
+    }
+  };
+
+  const handleClose = () => {
+    setName("");
+    setPrice("");
+    setRating(5);
+    setBrand("Выберите бренд");
+    setType("Выберите тип");
+    setImageFile(null);
+    setDescription([]);
+    onHide();
+  };
+  const clearForm = () => {
+    setName("");
+    setPrice("");
+    setRating(5);
+    setBrand("Выберите бренд");
+    setType("Выберите тип");
+    setDescription([]);
+    clearInputFile();
+  };
   const addDescription = () => {
     setDescription([
       ...description,
@@ -64,24 +92,17 @@ const CreateDevice = ({ show, onHide }) => {
       formData.append("img", imageFile);
     }
     try {
-      const response = await addDeviceApi(formData);
-      console.log(response);
-      dispatch(setDevices(response));
-      setName("");
-      setPrice("");
-      setRating(5);
-      setBrand("Выберите бренд");
-      setType("Выберите тип");
-      setImageFile(null);
-      setDescription([]);
-      onHide();
+      const newDevice = await addDeviceApi(formData);
+      console.log(newDevice);
+      dispatch(setDevices([...devices, newDevice]));
+      clearForm();
     } catch (e) {
       console.log("Ошибка при добавлении товара");
     }
   };
 
   return (
-    <Modal size="lg" centered show={show} onHide={onHide}>
+    <Modal size="lg" centered show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-center">
           Добавить новое устройство
@@ -116,17 +137,20 @@ const CreateDevice = ({ show, onHide }) => {
             </Dropdown.Menu>
           </Dropdown>
           <Form.Control
+            value={name}
             placeholder="Введите название устройства..."
             className="mt-3"
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
           <Form.Control
+            value={price}
             placeholder="Введите стоимость устройства..."
             className="mt-3"
             type="number"
             onChange={(e) => setPrice(e.target.value)}
           ></Form.Control>
           <Form.Control
+            ref={fileInputRef}
             className="mt-3"
             type="file"
             onChange={(e) => setImageFile(e.target.files[0])}
@@ -165,16 +189,10 @@ const CreateDevice = ({ show, onHide }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant={"outline-danger"} onClick={onHide}>
+        <Button variant={"outline-danger"} onClick={handleClose}>
           Закрыть
         </Button>
-        <Button
-          variant={"outline-success"}
-          onClick={() => {
-            handleFormSubmit();
-            onHide();
-          }}
-        >
+        <Button variant={"outline-success"} onClick={handleFormSubmit}>
           Добавить
         </Button>
       </Modal.Footer>

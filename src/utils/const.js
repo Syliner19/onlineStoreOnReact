@@ -1,3 +1,4 @@
+export const MAIN_URL = "http://localhost:5173";
 export const ADMIN_ROUTE = "/admin";
 export const LOGIN_ROUTE = "/login";
 export const REGISTRATION_ROUTE = "/registration";
@@ -9,3 +10,5 @@ export const DEVICES_ROUTE = "/devices";
 export const USER_ROUTE = "/user";
 export const TYPES_ROUTE = "/types";
 export const BRANDS_ROUTE = "/brands";
+export const ROLES_ROUTE = "/roles";
+export const COMPLETE_REGISTRATION_ROUTE = "/complete-registration";

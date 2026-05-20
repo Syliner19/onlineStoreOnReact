@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import {
   ADD_BRAND,
   ADD_TYPE,
+  DELETE_BRAND,
   SELECT_BRAND,
   SELECT_TYPE,
   SET_AUTH,
@@ -15,12 +16,7 @@ const initialAuthState = {
   user: { id: "", email: "", role: "" },
   isAuth: false,
 };
-const initialTypesState = [
-  { id: 1, name: "Холодильники" },
-  { id: 2, name: "Смартфоны" },
-  { id: 3, name: "Ноутбуки" },
-  { id: 4, name: "Телевизоры" },
-];
+const initialTypesState = [];
 const initialBrandsState = [];
 const initialDevicesState = [];
 
@@ -60,15 +56,18 @@ const brandsReducer = (state = initialBrandsState, action) => {
     return action.payload;
   }
   if (action.type === ADD_BRAND) {
-    console.log(action.payload);
-    console.log(state);
     const isBrandExist = state.some(
       (brand) => brand.name === action.payload.name,
     );
+    console.log(action.payload);
+    console.log(state);
     if (isBrandExist) {
       return state;
     }
     return [...state, action.payload];
+  }
+  if (action.type === DELETE_BRAND) {
+    return state.filter((brand) => brand.name !== action.payload.name);
   }
   return state;
 };

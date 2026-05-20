@@ -1,6 +1,7 @@
 import {
   ADD_BRAND,
   ADD_TYPE,
+  DELETE_BRAND,
   SELECT_BRAND,
   SELECT_TYPE,
   SET_AUTH,
@@ -37,4 +38,7 @@ export const addType = (type) => {
 };
 export const addBrand = (brand) => {
   return { type: ADD_BRAND, payload: brand };
+};
+export const deleteBrand = (brand) => {
+  return { type: DELETE_BRAND, payload: brand };
 };

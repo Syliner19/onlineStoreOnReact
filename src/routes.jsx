@@ -1,11 +1,13 @@
 import AdminPage from "./pages/AdminPage";
 import Auth from "./pages/Auth";
 import Basket from "./pages/Basket";
+import CompleteRegistration from "./pages/CompleteRegistration";
 import DevicePage from "./pages/DevicePage";
 import Shop from "./pages/Shop";
 import {
   ADMIN_ROUTE,
   BASKET_ROUTE,
+  COMPLETE_REGISTRATION_ROUTE,
   DEVICE_ROUTE,
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
@@ -18,6 +20,7 @@ export const publicRoutes = [
   { path: DEVICE_ROUTE + `/:id`, element: <DevicePage /> },
   { path: REGISTRATION_ROUTE, element: <Auth /> },
   { path: LOGIN_ROUTE, element: <Auth /> },
+  { path: COMPLETE_REGISTRATION_ROUTE, element: <CompleteRegistration /> },
 ];
 export const adminRoutes = [
   { path: ADMIN_ROUTE, element: <AdminPage /> },

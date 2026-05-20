@@ -81,6 +81,10 @@ export const devices = [
   },
 ];
 
+export const roles = [
+  { id: "1", name: "ADMIN" },
+  { id: "2", name: "USER" },
+];
 export const types = [
   { id: "1", name: "Холодильники" },
   { id: "2", name: "Смартфоны" },

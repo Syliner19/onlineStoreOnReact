@@ -3,11 +3,13 @@ import { Button, Container } from "react-bootstrap";
 import CreateBrand from "../components/modals/CreateBrand";
 import CreateType from "../components/modals/CreateType";
 import CreateDevice from "../components/modals/CreateDevice";
+import CreateUsers from "../components/modals/CreateUsers";
 
 const AdminPage = () => {
   const [brandVisible, setBrandVisible] = useState(false);
   const [typeVisible, setTypeVisible] = useState(false);
   const [deviceVisible, setDeviceVisible] = useState(false);
+  const [usersVisible, setUsersVisible] = useState(false);
 
   return (
     <Container className="d-flex flex-column">
@@ -18,7 +20,7 @@ const AdminPage = () => {
           setTypeVisible(true);
         }}
       >
-        Добавить тип
+        Редактировать список типов
       </Button>
       <Button
         variant={"outline-dark"}
@@ -27,7 +29,7 @@ const AdminPage = () => {
           setBrandVisible(true);
         }}
       >
-        Добавить бренд
+        Рeдактировать список брендов
       </Button>
       <Button
         variant={"outline-dark"}
@@ -36,7 +38,16 @@ const AdminPage = () => {
           setDeviceVisible(true);
         }}
       >
-        Добавить устройство
+        Управление товарами
+      </Button>
+      <Button
+        variant={"outline-dark"}
+        className="mt-4 p-2"
+        onClick={() => {
+          setUsersVisible(true);
+        }}
+      >
+        Редактировать пользователей
       </Button>
       <CreateBrand
         show={brandVisible}
@@ -54,6 +65,12 @@ const AdminPage = () => {
         show={deviceVisible}
         onHide={() => {
           setDeviceVisible(false);
+        }}
+      />
+      <CreateUsers
+        show={usersVisible}
+        onHide={() => {
+          setUsersVisible(false);
         }}
       />
     </Container>

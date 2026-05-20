@@ -1,7 +1,7 @@
-import { request } from "express";
+import { request, response } from "express";
 import { brands, devices, types } from "../bd.js";
 import { isUserAdmin } from "./helpers.js";
-
+const BACKEND_URL = process.env.VITE_APP_API_URL || "http://localhost:3000/";
 export const getDevices = (request, response) => {
   try {
     return response
@@ -40,6 +40,45 @@ export const addType = (request, response) => {
     .status(200)
     .json({ message: `Добавлен новый тип ${type.name}`, type });
 };
+export const getTypes = (request, response) => {
+  try {
+    return response
+      .status(200)
+      .json({ success: true, count: types.length, types });
+  } catch (e) {
+    return (
+      response.status(500),
+      json({ success: false, message: "Ошибка при получении типов" })
+    );
+  }
+};
+export const deleteType = (request, response) => {
+  try {
+    const user = isUserAdmin(request);
+    const { id } = request.params;
+    if (!user || user.role !== "ADMIN") {
+      return response.status(403).json({ message: "Доступ запрещен" });
+    }
+    const typeIndex = types.findIndex((type) => type.id === id);
+    if (typeIndex === -1) {
+      return response.status(404).json({
+        success: false,
+        message: `Тип не найден!`,
+      });
+    }
+    const deletedType = types[typeIndex];
+    types.splice(typeIndex, 1);
+    return response.status(200).json({
+      success: true,
+      message: `Тип ${deletedType.name} удален`,
+      deletedType,
+    });
+  } catch (e) {
+    return response
+      .status(500)
+      .json({ success: false, message: "Ошибка при удалении типа" });
+  }
+};
 
 export const addBrand = (request, response) => {
   const user = isUserAdmin(request);
@@ -54,6 +93,36 @@ export const addBrand = (request, response) => {
   return response
     .status(200)
     .json({ message: `Добавлен новый бренд ${brand.name}`, brand });
+};
+
+export const deleteBrand = (request, response) => {
+  try {
+    const user = isUserAdmin(request);
+    if (!user || user.role !== "ADMIN") {
+      return response.status(403).json({ message: "Доступ запрещен" });
+    }
+    const deletedBrand = brands.find(
+      (brand) => brand.name.toLowerCase() == request.body.name.toLowerCase(),
+    );
+    if (!deletedBrand) {
+      return response.status(404).json({ message: "Бренд не найден!" });
+    }
+    const brandIndex = brands.findIndex(
+      (brand) => brand.id === deletedBrand.id,
+    );
+    if (brandIndex !== -1) {
+      brands.splice(brandIndex, 1);
+    }
+    return response.status(200).json({
+      success: true,
+      message: `Бренд ${deletedBrand.name} удален`,
+      deletedBrand,
+    });
+  } catch (e) {
+    return response
+      .status(500)
+      .json({ success: false, message: "Ошибка при удалении бренда" });
+  }
 };
 
 export const getBrands = (request, response) => {
@@ -77,11 +146,13 @@ export const addDevice = (request, response) => {
   const { name, price, rating, type, brand, description } = request.body;
   let imgURL = "";
   if (request.file) {
-    imgURL - `/uploads/devices/${request.file.filename}`;
+    imgURL = `${BACKEND_URL}uploads/devices/${request.file.filename}`;
+  } else {
+    imgURL = null;
   }
   let parsedDescription = [];
   if (description) {
-    parsedDescription = JSON.stringify(description);
+    parsedDescription = JSON.parse(description);
   }
   const newDevice = {
     id: Date.now().toString(),
@@ -91,10 +162,12 @@ export const addDevice = (request, response) => {
     img: imgURL,
     type: type,
     brand: brand,
-    description: description,
+    description: parsedDescription,
   };
   devices.push(newDevice);
-  return response
-    .status(201)
-    .json({ success: true, message: "Устройство добавлено успешно", devices });
+  return response.status(201).json({
+    success: true,
+    message: "Устройство добавлено успешно",
+    device: newDevice,
+  });
 };

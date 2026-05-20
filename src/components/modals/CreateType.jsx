@@ -1,23 +1,43 @@
 import React, { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import { addTypeApi } from "../../http/deviceAPI";
-import { useDispatch } from "react-redux";
-import { addType } from "../../store/actions";
+import { Button, CloseButton, Form, ListGroup, Modal } from "react-bootstrap";
+import { addTypeApi, deleteTypeApi, fetchTypesApi } from "../../http/deviceAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { addType, setSelectType, setTypes } from "../../store/actions";
+import { selectTypes } from "../../store/selectors";
 
 const CreateType = ({ show, onHide }) => {
   const [type, setType] = useState("");
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const handleType = async (type) => {
+  const types = useSelector(selectTypes);
+  const handleClose = () => {
+    setError("");
+  };
+  const handleType = async (typeName) => {
     try {
       setError("");
-      const response = await addTypeApi(type);
+      const response = await addTypeApi(typeName);
       console.log(response.message);
       const newType = response.type;
       dispatch(addType(newType));
-      onHide();
+      setType("");
+      setError("");
     } catch ({ response }) {
       setError(response.data.message);
+    }
+  };
+  const handleDeleteType = async (typeId, e) => {
+    e.stopPropagation();
+    try {
+      setError("");
+      const response = await deleteTypeApi(typeId);
+      const updatedType = await fetchTypesApi();
+      console.log(updatedType);
+      dispatch(setTypes(updatedType));
+      handleClose();
+    } catch ({ response }) {
+      setError(response.data.message);
+      console.log(error);
     }
   };
   return (
@@ -30,17 +50,29 @@ const CreateType = ({ show, onHide }) => {
       <Modal.Body>
         <Form>
           <Form.Control
+            value={type}
             placeholder="Введите название типа..."
             onChange={(e) => setType(e.target.value.trim().toLowerCase())}
           ></Form.Control>
         </Form>
       </Modal.Body>
-      <span
-        style={{ color: "red" }}
-        className="d-flex align-items-center justify-content-center"
-      >
-        {error}
-      </span>
+      <ListGroup>
+        {types.map((type) => (
+          <ListGroup.Item
+            className="d-flex justify-content-between"
+            key={type.id}
+            onClick={() => {
+              dispatch(setSelectType(type));
+            }}
+          >
+            {type.name}
+            <CloseButton
+              key={type.id}
+              onClick={(e) => handleDeleteType(type.id, e)}
+            />
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
       <Modal.Footer>
         <Button variant={"outline-danger"} onClick={onHide}>
           Закрыть

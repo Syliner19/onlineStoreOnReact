@@ -7,3 +7,4 @@ export const SELECT_TYPE = "SELECT_TYPE";
 export const SELECT_BRAND = "SELECT_BRAND";
 export const ADD_TYPE = "ADD_TYPE";
 export const ADD_BRAND = "ADD_BRAND";
+export const DELETE_BRAND = "DELETE_BRAND";
