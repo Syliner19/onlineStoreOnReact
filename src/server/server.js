@@ -12,9 +12,11 @@ import {
   LOGIN_ROUTE,
   LOGOUT_ROUTE,
   REGISTRATION_ROUTE,
+  ROLE_ROUTE,
   ROLES_ROUTE,
   TYPES_ROUTE,
   USER_ROUTE,
+  USERS_ROUTE,
 } from "../utils/const.js";
 import { login } from "./api/login.js";
 import { logout } from "./api/logout.js";
@@ -32,9 +34,12 @@ import {
 } from "./api/deviceController.js";
 import {
   addUser,
+  changeRole,
   completeRegistration,
+  deleteUser,
   getRoles,
   getUser,
+  searchUsers,
 } from "./api/user.js";
 import upload from "./uploads/multerConfig.js";
 
@@ -68,6 +73,9 @@ app.post(`/api${DEVICES_ROUTE}`, upload.single("img"), addDevice);
 app.get(`/api${ROLES_ROUTE}`, getRoles);
 app.post(`/api${USER_ROUTE}`, addUser);
 app.post(`/api${COMPLETE_REGISTRATION_ROUTE}`, completeRegistration);
+app.get(`/api${USERS_ROUTE}`, searchUsers);
+app.delete(`/api${USER_ROUTE}`, deleteUser);
+app.post(`/api${ROLE_ROUTE}`, changeRole);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

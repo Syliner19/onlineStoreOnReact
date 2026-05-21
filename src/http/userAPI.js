@@ -4,8 +4,10 @@ import {
   LOGIN_ROUTE,
   LOGOUT_ROUTE,
   REGISTRATION_ROUTE,
+  ROLE_ROUTE,
   ROLES_ROUTE,
   USER_ROUTE,
+  USERS_ROUTE,
 } from "../utils/const.js";
 export const registration = async (email, password) => {
   try {
@@ -59,4 +61,23 @@ export const confirmPasswordApi = async (email, password) => {
     `/api${COMPLETE_REGISTRATION_ROUTE}?email=${encodeURIComponent(email)}`,
     { password },
   );
+};
+export const fetchSearchingUsers = async (name) => {
+  try {
+    const response = await axios.get(`/api${USERS_ROUTE}`, {
+      params: { name },
+    });
+    return response.data.users;
+  } catch (e) {
+    console.log("Ошибка", e);
+    throw e;
+  }
+};
+export const fetchDeleteUser = async (id) => {
+  const response = await axios.delete(`/api${USER_ROUTE}`, { data: { id } });
+  return response.data;
+};
+export const updateUserRoleApi = async (id, role) => {
+  const response = await axios.post(`/api${ROLE_ROUTE}`, { id, role });
+  return response.data;
 };

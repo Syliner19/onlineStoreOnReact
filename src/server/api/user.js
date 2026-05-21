@@ -70,3 +70,69 @@ export const completeRegistration = (request, response) => {
     message: "Пароль успешно установлен. Теперь вы можете войти в систему",
   });
 };
+export const searchUsers = (request, response) => {
+  const { name } = request.query;
+  if (!name) {
+    return response
+      .status(400)
+      .json({ success: false, message: "Имя обязательно для поиска" });
+  }
+  const isAdmin = isUserAdmin(request);
+  if (!isAdmin) {
+    return response
+      .status(401)
+      .json({ message: "Пользователь не авторизован" });
+  }
+  const searchingUsers = users.filter((u) => u.email.includes(name));
+  if (searchingUsers.length === 0) {
+    return response.status(200).json({
+      success: true,
+      message: "Пользователи не найдены",
+      users: [],
+    });
+  }
+  return response.status(200).json({
+    success: true,
+    message: "Пользователи найдены",
+    users: searchingUsers,
+  });
+};
+export const deleteUser = (request, response) => {
+  const isAdmin = isUserAdmin(request);
+  if (!isAdmin) {
+    return response
+      .status(401)
+      .json({ message: "Пользователь не авторизован" });
+  }
+  const { id } = request.body;
+  const userIndex = users.findIndex((user) => user.id === id);
+  if (userIndex === -1) {
+    return response
+      .status(401)
+      .json({ success: false, message: "Пользователь не найден" });
+  }
+  const deletedUser = users[userIndex];
+  users.splice(userIndex, 1);
+  return response.status(200).json({
+    success: true,
+    message: `Пользователь ${deletedUser.email} успешно удален`,
+    deletedUser,
+  });
+};
+export const changeRole = (request, response) => {
+  const isAdmin = isUserAdmin(request);
+  if (!isAdmin) {
+    return response
+      .status(401)
+      .json({ message: "Пользователь не авторизован" });
+  }
+  const { id, role } = request.body;
+  const user = users.find((user) => user.id === id);
+  if (user) {
+    user.role = role;
+  }
+  return response.status(200).json({
+    success: true,
+    message: `У пользователя ${user.name} изменена роль на ${user.role}`,
+  });
+};

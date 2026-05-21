@@ -11,4 +11,6 @@ export const USER_ROUTE = "/user";
 export const TYPES_ROUTE = "/types";
 export const BRANDS_ROUTE = "/brands";
 export const ROLES_ROUTE = "/roles";
+export const ROLE_ROUTE = "/role";
 export const COMPLETE_REGISTRATION_ROUTE = "/complete-registration";
+export const USERS_ROUTE = "/users";
