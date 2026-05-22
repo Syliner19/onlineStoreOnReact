@@ -14,3 +14,6 @@ export const ROLES_ROUTE = "/roles";
 export const ROLE_ROUTE = "/role";
 export const COMPLETE_REGISTRATION_ROUTE = "/complete-registration";
 export const USERS_ROUTE = "/users";
+export const CART_ROUTE = "/cart";
+export const CART_ROUTE_ADD = "/cart/add";
+export const CART_ROUTE_TOGGLE_CHECKBOX_OF_DEVICE = "/cart/toggle-checkbox";

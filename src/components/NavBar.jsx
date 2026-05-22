@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,7 +10,7 @@ import { selectIsAdmin, selectIsAuth, selectRole } from "../store/selectors";
 import { setAuth, setUser } from "../store/actions";
 import { logout, user } from "../http/userAPI";
 
-const NavBar = memo(() => {
+const NavBar = memo(({ setCartVisible }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
@@ -40,8 +40,18 @@ const NavBar = memo(() => {
         </NavLink>
         {isAuth ? (
           <Nav className="ms-auto" style={{ color: "white" }}>
+            <Button
+              variant={"outline-light"}
+              className="ms-2"
+              onClick={() => {
+                setCartVisible(true);
+              }}
+            >
+              Корзина
+            </Button>
             {isAdmin && (
               <Button
+                className="ms-2"
                 variant={"outline-light"}
                 onClick={() => {
                   navigate(ADMIN_ROUTE);

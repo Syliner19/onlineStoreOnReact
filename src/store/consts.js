@@ -8,3 +8,6 @@ export const SELECT_BRAND = "SELECT_BRAND";
 export const ADD_TYPE = "ADD_TYPE";
 export const ADD_BRAND = "ADD_BRAND";
 export const DELETE_BRAND = "DELETE_BRAND";
+export const ADD_DEVICE_TO_CART = "ADD_DEVICE_TO_CART";
+export const CHANGE_CHEKBOX_DEVICE_FROM_CART =
+  "CHANGE_CHEKBOX_DEVICE_FROM_CART";

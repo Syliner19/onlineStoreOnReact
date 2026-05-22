@@ -1,5 +1,6 @@
 import {
   ADD_BRAND,
+  ADD_DEVICE_TO_CART,
   ADD_TYPE,
   DELETE_BRAND,
   SELECT_BRAND,
@@ -41,4 +42,10 @@ export const addBrand = (brand) => {
 };
 export const deleteBrand = (brand) => {
   return { type: DELETE_BRAND, payload: brand };
+};
+export const addDeviceToCart = (id, count) => {
+  return { type: ADD_DEVICE_TO_CART, payload: { id, count } };
+};
+export const changeCheckboxDeviceFromCart = () => {
+  return { type: CHANGE_CHEKBOX_DEVICE_FROM_CART, payload: id };
 };

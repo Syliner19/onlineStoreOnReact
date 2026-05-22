@@ -23,7 +23,6 @@ export const selectBrands = (state) => {
 export const selectDevices = (state) => {
   return state.devices;
 };
-
 export const selectDeviceById = (id) => (state) => {
   const devices = selectDevices(state);
   return devices.find((d) => d.id === id);
@@ -33,4 +32,13 @@ export const selectSelectedType = (state) => {
 };
 export const selectSelectedBrand = (state) => {
   return state.selectedBrand;
+};
+export const selectCart = (state) => {
+  return state.cart;
+};
+export const selectCartCount = (state) => {
+  return selectCart(state).count;
+};
+export const selectCartIsCheked = (state) => {
+  return selectCart(state).cheked;
 };

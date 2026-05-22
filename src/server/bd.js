@@ -195,3 +195,4 @@ export const users = [
 export const registrations = [];
 export const login = [];
 export const sessions = {};
+export const cart = new Map();

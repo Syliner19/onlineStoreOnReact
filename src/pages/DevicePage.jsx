@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigStar from "../assets/bigStar.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectDeviceById } from "../store/selectors";
 import { fetchDeviceByIdApi } from "../http/deviceAPI";
+import { addDeviceToCart } from "../store/actions";
 
 const DevicePage = () => {
   const { id } = useParams();
   const [device, setDevice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
   useEffect(() => {
     setErrorMessage("");
     setIsLoading(true);
@@ -60,7 +62,14 @@ const DevicePage = () => {
             }}
           >
             <h3>От: {device.price} руб.</h3>
-            <Button variant={"outline-dark"}>Добавить в корзину</Button>
+            <Button
+              variant={"outline-dark"}
+              onClick={() => {
+                dispatch(addDeviceToCart(device.id));
+              }}
+            >
+              Добавить в корзину
+            </Button>
           </Card>
         </Col>
       </Row>

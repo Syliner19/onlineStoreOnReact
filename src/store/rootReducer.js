@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 import {
   ADD_BRAND,
+  ADD_DEVICE_TO_CART,
   ADD_TYPE,
+  CHANGE_CHEKBOX_DEVICE_FROM_CART,
   DELETE_BRAND,
   SELECT_BRAND,
   SELECT_TYPE,
@@ -85,6 +87,24 @@ const devicesReducer = (state = initialDevicesState, action) => {
   }
   return state;
 };
+const cartReducer = (state = {}, action) => {
+  if (action.type === ADD_DEVICE_TO_CART) {
+    const { id, count = 1 } = action.payload;
+    if (state[id]) {
+      return {
+        ...state,
+        [id]: { ...state[id], count: state[id].count + count },
+      };
+    } else {
+      return { ...state, [id]: { cheked: false, count: count } };
+    }
+  }
+  if (action.type === CHANGE_CHEKBOX_DEVICE_FROM_CART) {
+    const { id } = action.payload;
+    return { ...state, [id]: { ...state[id], cheked: !state[id].cheked } };
+  }
+  return state;
+};
 
 export const rootReducer = combineReducers({
   auth: authReducer,
@@ -93,4 +113,5 @@ export const rootReducer = combineReducers({
   devices: devicesReducer,
   selectedType: selectedTypeReducer,
   selectedBrand: selectedBrandReducer,
+  cart: cartReducer,
 });
