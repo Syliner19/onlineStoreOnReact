@@ -3,16 +3,17 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigStar from "../assets/bigStar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectDeviceById } from "../store/selectors";
+import { selectDeviceById, selectUserId } from "../store/selectors";
 import { fetchDeviceByIdApi } from "../http/deviceAPI";
 import { addDeviceToCart } from "../store/actions";
-import { fetchCartItemsAPI } from "../http/cartAPI";
+import { addDeviceToCartApi } from "../http/cartAPI";
 
 const DevicePage = () => {
   const { id } = useParams();
   const [device, setDevice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
   useEffect(() => {
     setErrorMessage("");
@@ -23,9 +24,11 @@ const DevicePage = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const handleAddDeviceToCart = async () => {
+  const handleAddDeviceToCart = async (userId, deviceId) => {
     try {
-      const response = await fetchCartItemsAPI(userId, cart);
+      console.log(userId);
+      const response = await addDeviceToCartApi(userId, deviceId);
+      console.log(response.data);
     } catch (e) {
       console.error("Error loading cart:", e);
     }
@@ -75,7 +78,7 @@ const DevicePage = () => {
             <Button
               variant={"outline-dark"}
               onClick={() => {
-                dispatch(addDeviceToCart(device.id));
+                handleAddDeviceToCart(userId, device.id);
               }}
             >
               Добавить в корзину

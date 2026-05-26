@@ -6,8 +6,10 @@ import { registration } from "./api/registration.js";
 import {
   ADMIN_ROUTE,
   BRANDS_ROUTE,
+  CART_CHECKBOX_CONTROL,
   CART_ROUTE,
   CART_ROUTE_ADD,
+  CART_ROUTE_DELETE,
   COMPLETE_REGISTRATION_ROUTE,
   DEVICE_ROUTE,
   DEVICES_ROUTE,
@@ -44,7 +46,13 @@ import {
   searchUsers,
 } from "./api/user.js";
 import upload from "./uploads/multerConfig.js";
-import { addCart, getCartById } from "./api/cartController.js";
+import {
+  addDeviceToCart,
+  changeCheckboxForDevice,
+  deleteDeviceFromCart,
+  getCartByUserId,
+  getChekedDevices,
+} from "./api/cartController.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,8 +87,11 @@ app.post(`/api${COMPLETE_REGISTRATION_ROUTE}`, completeRegistration);
 app.get(`/api${USERS_ROUTE}`, searchUsers);
 app.delete(`/api${USER_ROUTE}`, deleteUser);
 app.post(`/api${ROLE_ROUTE}`, changeRole);
-app.post(`/api${CART_ROUTE_ADD}`, addCart);
-app.get(`/api${CART_ROUTE}/:id`, getCartById);
+app.post(`/api${CART_ROUTE_ADD}`, addDeviceToCart);
+app.get(`/api${CART_ROUTE}/:id`, getCartByUserId);
+app.delete(`/api${CART_ROUTE_DELETE}`, deleteDeviceFromCart);
+app.post(`/api${CART_CHECKBOX_CONTROL}`, changeCheckboxForDevice);
+app.get(`/api${CART_CHECKBOX_CONTROL}/:userId`, getChekedDevices);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

@@ -17,3 +17,5 @@ export const USERS_ROUTE = "/users";
 export const CART_ROUTE = "/cart";
 export const CART_ROUTE_ADD = "/cart/add";
 export const CART_ROUTE_TOGGLE_CHECKBOX_OF_DEVICE = "/cart/toggle-checkbox";
+export const CART_ROUTE_DELETE = "/cart/delete";
+export const CART_CHECKBOX_CONTROL = "/cart/checkbox";

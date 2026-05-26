@@ -15,83 +15,80 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectCart,
   selectCartIsCheked,
+  selectIsAuth,
   selectUser,
+  selectUserId,
 } from "../../store/selectors";
-import { fetchCartItemsAPI } from "../../http/cartAPI";
 import {
   changeCheckboxDeviceFromCart,
   deleteDevicesFromCart,
 } from "../../store/actions";
+import {
+  changeCheckboxForDeviceApi,
+  deleteDeviceFromCartApi,
+  fetchCartByUserId,
+  fetchCheckedDevices,
+} from "../../http/cartAPI";
 
 const Cart = ({ show, onHide }) => {
-  const cart = useSelector(selectCart);
-  const user = useSelector(selectUser);
+  const userId = useSelector(selectUserId);
+  const isAuth = useSelector(selectIsAuth);
+  const [chekedCart, setChekedCart] = useState([]);
   const dispatch = useDispatch();
-  const [devices, setDevices] = useState([]);
-  const userId = user.id;
-  console.log(Object.entries(cart));
+  const [cart, setCart] = useState({ devices: [], totalPrice: 0 });
+  console.log(userId);
   useEffect(() => {
+    if (!isAuth || !userId) {
+      setCart({ devices: [], totalPrice: 0 });
+      return;
+    }
     const loadCart = async () => {
       try {
-        const response = await fetchCartItemsAPI(userId, cart);
+        const response = await fetchCartByUserId(userId);
+        setCart(response.cart);
+        const chekedResponse = await fetchCheckedDevices(userId);
+        setChekedCart(chekedResponse.cart.devices);
         console.log(response);
-        setDevices(response.data);
       } catch (e) {
         console.error("Error loading cart:", e);
-        setDevices([]);
+        setCart({ devices: [], totalPrice: 0 });
       }
     };
     loadCart();
-  }, [cart, userId, show]);
+  }, [userId, show]);
 
-  const getDevicesArray = () => {
-    if (!cart) {
-      return [];
-    }
-    if (!devices) {
-      return [];
-    }
-    return devices.cart?.devices ?? [];
-  };
-  const getTotalPrice = () => {
-    if (!cart || !devices) {
-      return null;
-    }
-    return devices?.cart?.totalPrice;
-  };
-  const totalPrice = getTotalPrice();
-  const arrayFromDevices = getDevicesArray();
+  const arrayFromDevices = cart?.devices || [];
+  const totalPrice = cart?.totalPrice || 0;
 
-  const handleChekboxChange = (deviceId) => {
-    dispatch(changeCheckboxDeviceFromCart(deviceId));
-    setDevices((prev) => {
-      return {
-        ...prev,
-        cart: {
-          ...prev.cart,
-          devices: prev.cart.devices.map((device) =>
-            device.id === deviceId
-              ? { ...device, checked: !device.checked }
-              : device,
-          ),
-        },
-      };
-    });
+  const handleChekboxChange = async (userId, deviceId) => {
+    try {
+      const response = await changeCheckboxForDeviceApi(userId, deviceId);
+      const chekedResponse = await fetchCheckedDevices(userId);
+      console.log(chekedResponse.cart.devices);
+      setChekedCart(chekedResponse.cart.devices);
+      console.log(response);
+    } catch (e) {
+      console.error("Error change chekbox:", e);
+    }
   };
   const isDeviceCheked = (id) => {
-    return cart[id]?.checked ?? false;
+    return chekedCart.some((device) => device.id === id);
   };
   const finnalyOrder = () => {
     const finalDevices = arrayFromDevices.filter((device) => device.checked);
     console.log(finalDevices);
     return finalDevices;
   };
-  const handleDeleteDevice = (id) => {
-    const devicesWitoutDeleted = arrayFromDevices.filter(
-      (device) => device.id !== id,
-    );
-    setDevices(devicesWitoutDeleted);
-    dispatch(deleteDevicesFromCart(id));
+  const handleDeleteDevice = async (userId, id) => {
+    try {
+      const response = await deleteDeviceFromCartApi(userId, id);
+      console.log(response);
+      setCart(response.data.cart);
+      console.log(cart);
+    } catch (e) {
+      console.error("Error loading cart:", e);
+      setCart({ devices: [], totalPrice: 0 });
+    }
   };
   return (
     <Modal size="lg" centered show={show} onHide={onHide}>
@@ -114,11 +111,10 @@ const Cart = ({ show, onHide }) => {
                 type="checkbox"
                 label=""
                 className="m-0"
-                style={{ boxShadow: "none" }}
                 checked={isDeviceCheked(device.id)}
+                style={{ boxShadow: "none" }}
                 onChange={() => {
-                  handleChekboxChange(device.id);
-                  console.log(devices);
+                  handleChekboxChange(userId, device.id);
                 }}
               />
               <div style={{ width: 50 }}>
@@ -139,7 +135,8 @@ const Cart = ({ show, onHide }) => {
               </div>
               <CloseButton
                 onClick={() => {
-                  handleDeleteDevice(device.id);
+                  handleDeleteDevice(userId, device.id);
+                  console.log(cart);
                 }}
               />
             </div>

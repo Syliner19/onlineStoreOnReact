@@ -1,6 +1,6 @@
 import { request, response } from "express";
 import { brands, devices, types } from "../bd.js";
-import { isUserAdmin } from "./helpers.js";
+import { isUserAuth } from "./helpers.js";
 const BACKEND_URL = process.env.VITE_APP_API_URL || "http://localhost:3000/";
 export const getDevices = (request, response) => {
   try {
@@ -27,7 +27,7 @@ export const getDevicesById = (request, response) => {
 };
 
 export const addType = (request, response) => {
-  const user = isUserAdmin(request);
+  const user = isUserAuth(request);
   if (!user || user.role !== "ADMIN") {
     return response.status(403).json({ message: "Доступ запрещен" });
   }
@@ -54,7 +54,7 @@ export const getTypes = (request, response) => {
 };
 export const deleteType = (request, response) => {
   try {
-    const user = isUserAdmin(request);
+    const user = isUserAuth(request);
     const { id } = request.params;
     if (!user || user.role !== "ADMIN") {
       return response.status(403).json({ message: "Доступ запрещен" });
@@ -81,7 +81,7 @@ export const deleteType = (request, response) => {
 };
 
 export const addBrand = (request, response) => {
-  const user = isUserAdmin(request);
+  const user = isUserAuth(request);
   if (!user || user.role !== "ADMIN") {
     return response.status(403).json({ message: "Доступ запрещен" });
   }
@@ -97,7 +97,7 @@ export const addBrand = (request, response) => {
 
 export const deleteBrand = (request, response) => {
   try {
-    const user = isUserAdmin(request);
+    const user = isUserAuth(request);
     if (!user || user.role !== "ADMIN") {
       return response.status(403).json({ message: "Доступ запрещен" });
     }
@@ -139,7 +139,7 @@ export const getBrands = (request, response) => {
 };
 
 export const addDevice = (request, response) => {
-  const user = isUserAdmin(request);
+  const user = isUserAuth(request);
   if (!user || user.role !== "ADMIN") {
     return response.status(403).json({ message: "Доступ запрещен" });
   }

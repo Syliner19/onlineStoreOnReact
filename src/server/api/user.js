@@ -1,10 +1,10 @@
 import { request, response } from "express";
 import { roles, sessions, users } from "../bd.js";
-import { isUserAdmin } from "./helpers.js";
+import { isUserAuth } from "./helpers.js";
 import { MAIN_URL } from "../../utils/const.js";
 
 export const getUser = (request, response) => {
-  const user = isUserAdmin(request);
+  const user = isUserAuth(request);
   if (!user) {
     return response
       .status(401)
@@ -15,7 +15,7 @@ export const getUser = (request, response) => {
   });
 };
 export const getRoles = (request, response) => {
-  const user = isUserAdmin(request);
+  const user = isUserAuth(request);
   if (!user) {
     return response
       .status(401)
@@ -26,7 +26,7 @@ export const getRoles = (request, response) => {
     .json({ success: true, count: roles.length, roles });
 };
 export const addUser = (request, response) => {
-  const user = isUserAdmin(request);
+  const user = isUserAuth(request);
   if (!user) {
     return response
       .status(401)
@@ -77,8 +77,8 @@ export const searchUsers = (request, response) => {
       .status(400)
       .json({ success: false, message: "Имя обязательно для поиска" });
   }
-  const isAdmin = isUserAdmin(request);
-  if (!isAdmin) {
+  const isAuth = isUserAuth(request);
+  if (!isAuth) {
     return response
       .status(401)
       .json({ message: "Пользователь не авторизован" });
@@ -98,8 +98,8 @@ export const searchUsers = (request, response) => {
   });
 };
 export const deleteUser = (request, response) => {
-  const isAdmin = isUserAdmin(request);
-  if (!isAdmin) {
+  const isAuth = isUserAuth(request);
+  if (!isAuth) {
     return response
       .status(401)
       .json({ message: "Пользователь не авторизован" });
@@ -120,8 +120,8 @@ export const deleteUser = (request, response) => {
   });
 };
 export const changeRole = (request, response) => {
-  const isAdmin = isUserAdmin(request);
-  if (!isAdmin) {
+  const isAuth = isUserAuth(request);
+  if (!isAuth) {
     return response
       .status(401)
       .json({ message: "Пользователь не авторизован" });
