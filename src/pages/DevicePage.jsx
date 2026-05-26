@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { selectDeviceById } from "../store/selectors";
 import { fetchDeviceByIdApi } from "../http/deviceAPI";
 import { addDeviceToCart } from "../store/actions";
+import { fetchCartItemsAPI } from "../http/cartAPI";
 
 const DevicePage = () => {
   const { id } = useParams();
@@ -21,6 +22,15 @@ const DevicePage = () => {
       .catch(({ response }) => setErrorMessage(response.data.message))
       .finally(() => setIsLoading(false));
   }, []);
+
+  const handleAddDeviceToCart = async () => {
+    try {
+      const response = await fetchCartItemsAPI(userId, cart);
+    } catch (e) {
+      console.error("Error loading cart:", e);
+    }
+  };
+
   if (isLoading) {
     return <div>Загрузка...</div>;
   }

@@ -2,7 +2,9 @@ import {
   ADD_BRAND,
   ADD_DEVICE_TO_CART,
   ADD_TYPE,
+  CHANGE_CHEKBOX_DEVICE_FROM_CART,
   DELETE_BRAND,
+  DELETE_DEVICE_FROM_CART,
   SELECT_BRAND,
   SELECT_TYPE,
   SET_AUTH,
@@ -46,6 +48,9 @@ export const deleteBrand = (brand) => {
 export const addDeviceToCart = (id, count) => {
   return { type: ADD_DEVICE_TO_CART, payload: { id, count } };
 };
-export const changeCheckboxDeviceFromCart = () => {
-  return { type: CHANGE_CHEKBOX_DEVICE_FROM_CART, payload: id };
+export const changeCheckboxDeviceFromCart = (id) => {
+  return { type: CHANGE_CHEKBOX_DEVICE_FROM_CART, payload: { id } };
+};
+export const deleteDevicesFromCart = (id) => {
+  return { type: DELETE_DEVICE_FROM_CART, payload: { id } };
 };

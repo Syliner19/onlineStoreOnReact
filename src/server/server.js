@@ -6,6 +6,7 @@ import { registration } from "./api/registration.js";
 import {
   ADMIN_ROUTE,
   BRANDS_ROUTE,
+  CART_ROUTE,
   CART_ROUTE_ADD,
   COMPLETE_REGISTRATION_ROUTE,
   DEVICE_ROUTE,
@@ -43,7 +44,7 @@ import {
   searchUsers,
 } from "./api/user.js";
 import upload from "./uploads/multerConfig.js";
-import { addCart } from "./api/cartController.js";
+import { addCart, getCartById } from "./api/cartController.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,6 +80,7 @@ app.get(`/api${USERS_ROUTE}`, searchUsers);
 app.delete(`/api${USER_ROUTE}`, deleteUser);
 app.post(`/api${ROLE_ROUTE}`, changeRole);
 app.post(`/api${CART_ROUTE_ADD}`, addCart);
+app.get(`/api${CART_ROUTE}/:id`, getCartById);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

@@ -8,11 +8,14 @@ export const selectUser = (state) => {
   console.log(state);
   return selectAuth(state).user;
 };
+export const selectUserId = (state) => {
+  return selectUser(state).id;
+};
 export const selectRole = (state) => {
   return selectUser(state).role;
 };
 export const selectIsAdmin = (state) => {
-  return selectUser(state).role === "ADMIN";
+  return selectRole(state) === "ADMIN";
 };
 export const selectTypes = (state) => {
   return state.types;
@@ -23,7 +26,7 @@ export const selectBrands = (state) => {
 export const selectDevices = (state) => {
   return state.devices;
 };
-export const selectDeviceById = (id) => (state) => {
+export const selectDeviceById = (state, id) => (state) => {
   const devices = selectDevices(state);
   return devices.find((d) => d.id === id);
 };
@@ -39,6 +42,10 @@ export const selectCart = (state) => {
 export const selectCartCount = (state) => {
   return selectCart(state).count;
 };
-export const selectCartIsCheked = (state) => {
-  return selectCart(state).cheked;
+export const selectCartIsCheked = (state, id) => {
+  const item = selectCart(state)[id];
+  if (!item) {
+    return null;
+  }
+  return item.checked;
 };

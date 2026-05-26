@@ -5,6 +5,7 @@ import {
   ADD_TYPE,
   CHANGE_CHEKBOX_DEVICE_FROM_CART,
   DELETE_BRAND,
+  DELETE_DEVICE_FROM_CART,
   SELECT_BRAND,
   SELECT_TYPE,
   SET_AUTH,
@@ -96,12 +97,17 @@ const cartReducer = (state = {}, action) => {
         [id]: { ...state[id], count: state[id].count + count },
       };
     } else {
-      return { ...state, [id]: { cheked: false, count: count } };
+      return { ...state, [id]: { checked: false, count: count } };
     }
   }
   if (action.type === CHANGE_CHEKBOX_DEVICE_FROM_CART) {
     const { id } = action.payload;
-    return { ...state, [id]: { ...state[id], cheked: !state[id].cheked } };
+    return { ...state, [id]: { ...state[id], checked: !state[id].checked } };
+  }
+  if (action.type === DELETE_DEVICE_FROM_CART) {
+    const { id } = action.payload;
+    const { [id]: removedItem, ...newState } = state;
+    return newState;
   }
   return state;
 };

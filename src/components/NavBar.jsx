@@ -72,6 +72,15 @@ const NavBar = memo(({ setCartVisible }) => {
           <Nav className="ms-auto" style={{ color: "white" }}>
             <Button
               variant={"outline-light"}
+              className="ms-2"
+              onClick={() => {
+                setCartVisible(true);
+              }}
+            >
+              Корзина
+            </Button>
+            <Button
+              variant={"outline-light"}
               onClick={() => {
                 navigate(LOGIN_ROUTE);
               }}
