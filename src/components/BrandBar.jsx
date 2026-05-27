@@ -14,7 +14,6 @@ const BrandBar = () => {
       .catch((e) => console.log(e));
   }, [dispatch]);
   const brands = useSelector(selectBrands);
-  console.log(selectedBrand);
   return (
     <div className="d-flex flex-wrap gap-2">
       {brands.map((brand) => (

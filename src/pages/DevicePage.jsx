@@ -3,10 +3,15 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigStar from "../assets/bigStar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectDeviceById, selectUserId } from "../store/selectors";
+import {
+  selectDeviceById,
+  selectIsAuth,
+  selectUserId,
+} from "../store/selectors";
 import { fetchDeviceByIdApi } from "../http/deviceAPI";
 import { addDeviceToCart } from "../store/actions";
 import { addDeviceToCartApi } from "../http/cartAPI";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const DevicePage = () => {
   const { id } = useParams();
@@ -14,7 +19,12 @@ const DevicePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const userId = useSelector(selectUserId);
+  const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
+  const [notAuthCart, setNotAuthCart] = useLocalStorage("cart", {
+    devices: [],
+    totalPrice: 0,
+  });
   useEffect(() => {
     setErrorMessage("");
     setIsLoading(true);
@@ -22,13 +32,41 @@ const DevicePage = () => {
       .then((resp) => setDevice(resp))
       .catch(({ response }) => setErrorMessage(response.data.message))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [id]);
 
   const handleAddDeviceToCart = async (userId, deviceId) => {
     try {
-      console.log(userId);
-      const response = await addDeviceToCartApi(userId, deviceId);
-      console.log(response.data);
+      if (isAuth) {
+        const response = await addDeviceToCartApi(userId, deviceId);
+      } else {
+        setNotAuthCart((prev) => {
+          const existingDevice = prev.devices.findIndex(
+            (dev) => dev.id === deviceId,
+          );
+          if (existingDevice !== -1) {
+            const updatedDevices = [...prev.devices];
+            updatedDevices[existingDevice].count += 1;
+            const newTotalPrice = updatedDevices.reduce((acc, dev) => {
+              acc += dev.price * dev.count;
+              return acc;
+            }, 0);
+            return {
+              ...prev,
+              devices: updatedDevices,
+              totalPrice: newTotalPrice,
+            };
+          } else {
+            return {
+              ...prev,
+              devices: [
+                ...prev.devices,
+                { ...device, count: 1, checked: false },
+              ],
+              totalPrice: prev.totalPrice + device.price,
+            };
+          }
+        });
+      }
     } catch (e) {
       console.error("Error loading cart:", e);
     }

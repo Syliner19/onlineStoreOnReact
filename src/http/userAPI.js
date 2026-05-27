@@ -15,16 +15,12 @@ export const registration = async (email, password) => {
       email,
       password,
     });
-    console.log(response);
-    console.log(response.data.message);
   } catch (e) {
     console.log("Ошибка");
   }
 };
 export const login = async (email, password) => {
   const response = await axios.post(`/api${LOGIN_ROUTE}`, { email, password });
-  console.log(response.data.message);
-  console.log(response.data);
   return response;
 };
 
@@ -48,8 +44,6 @@ export const addUserApi = async (email, role) => {
       password: null,
       role,
     });
-    console.log(response);
-    console.log(response.data.message);
     return response.data;
   } catch (e) {
     console.log("Ошибка");

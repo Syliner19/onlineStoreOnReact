@@ -34,7 +34,6 @@ const CompleteRegistration = () => {
     setError("");
     try {
       const response = await confirmPasswordApi(email, password);
-      console.log(response);
       if (response.data.success) {
         setSuccess(true);
       } else {
@@ -43,9 +42,6 @@ const CompleteRegistration = () => {
     } catch (e) {
       setError(e.response?.data?.message || "Ошибка при установке пароля");
     }
-    // setError("");
-    // setPassword("");
-    // setConfirmPassword("");
   };
 
   if (!email) {

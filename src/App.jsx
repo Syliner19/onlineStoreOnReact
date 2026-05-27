@@ -3,7 +3,7 @@ import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
 import { useSelector } from "react-redux";
 import { selectUser } from "./store/selectors";
-import Cart from "./components/modals/Cart";
+import Cart from "./components/modals/Cart/Cart.jsx";
 import { useState } from "react";
 
 function App() {
@@ -12,12 +12,13 @@ function App() {
     <BrowserRouter>
       <NavBar setCartVisible={setCartVisible} />
       <AppRouter></AppRouter>
-      <Cart
-        show={cartVisible}
-        onHide={() => {
-          setCartVisible(false);
-        }}
-      />
+      {cartVisible ? (
+        <Cart
+          onHide={() => {
+            setCartVisible(false);
+          }}
+        />
+      ) : null}
     </BrowserRouter>
   );
 }

@@ -17,7 +17,6 @@ const CreateType = ({ show, onHide }) => {
     try {
       setError("");
       const response = await addTypeApi(typeName);
-      console.log(response.message);
       const newType = response.type;
       dispatch(addType(newType));
       setType("");

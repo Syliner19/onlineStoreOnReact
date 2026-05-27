@@ -21,7 +21,6 @@ export const addTypeApi = async (type) => {
 };
 export const deleteTypeApi = async (id) => {
   const response = await axios.delete(`/api${TYPES_ROUTE}/${id}`);
-  console.log(response);
   return response.data;
 };
 export const fetchTypesApi = async () => {
@@ -46,6 +45,5 @@ export const addDeviceApi = async (formData) => {
   const response = await axios.post(`/api${DEVICES_ROUTE}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
-  console.log(response);
   return response.data.device;
 };

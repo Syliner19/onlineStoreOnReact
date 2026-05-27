@@ -22,8 +22,6 @@ const CreateDevice = ({ show, onHide }) => {
   const [description, setDescription] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const fileInputRef = useRef(null);
-  console.log(description);
-  console.log(imageFile);
   const clearInputFile = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -93,7 +91,6 @@ const CreateDevice = ({ show, onHide }) => {
     }
     try {
       const newDevice = await addDeviceApi(formData);
-      console.log(newDevice);
       dispatch(setDevices([...devices, newDevice]));
       clearForm();
     } catch (e) {

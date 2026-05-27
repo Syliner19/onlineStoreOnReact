@@ -88,7 +88,7 @@ app.get(`/api${USERS_ROUTE}`, searchUsers);
 app.delete(`/api${USER_ROUTE}`, deleteUser);
 app.post(`/api${ROLE_ROUTE}`, changeRole);
 app.post(`/api${CART_ROUTE_ADD}`, addDeviceToCart);
-app.get(`/api${CART_ROUTE}/:id`, getCartByUserId);
+app.get(`/api${CART_ROUTE}`, getCartByUserId);
 app.delete(`/api${CART_ROUTE_DELETE}`, deleteDeviceFromCart);
 app.post(`/api${CART_CHECKBOX_CONTROL}`, changeCheckboxForDevice);
 app.get(`/api${CART_CHECKBOX_CONTROL}/:userId`, getChekedDevices);

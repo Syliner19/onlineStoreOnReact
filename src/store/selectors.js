@@ -5,7 +5,6 @@ export const selectIsAuth = (state) => {
   return selectAuth(state).isAuth;
 };
 export const selectUser = (state) => {
-  console.log(state);
   return selectAuth(state).user;
 };
 export const selectUserId = (state) => {

@@ -18,7 +18,6 @@ const TypeBar = () => {
       .then((brandsFromApi) => dispatch(setTypes(brandsFromApi)))
       .catch((e) => console.log(e));
   }, [dispatch]);
-  console.log(selectedType);
   return (
     <ListGroup>
       {types.map((type) => (

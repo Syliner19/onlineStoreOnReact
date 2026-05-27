@@ -21,7 +21,6 @@ const CreateBrand = ({ show, onHide }) => {
     try {
       setError("");
       const response = await addBrandApi(brand);
-      console.log(response.message);
       const newBrand = response.brand;
       dispatch(addBrand(newBrand));
       handleClose();

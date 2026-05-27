@@ -42,25 +42,26 @@ export const addDeviceToCart = (request, response) => {
 };
 
 export const getCartByUserId = (request, response) => {
-  const isAuth = isUserAuth(request);
-  if (isAuth) {
-    const { id } = request.params;
-    if (!cart[id]) {
+  const user = isUserAuth(request);
+  if (user) {
+    const userId = user.id;
+    if (!cart[userId]) {
       return response.status(200).json({
         success: false,
         cart: { devices: [], totalPrice: 0 },
-        message: `Корзина пользователя ${id} пуста`,
+        message: `Корзина пользователя ${userId} пуста`,
       });
     }
-    return response.status(200).json({ success: true, cart: cart[id] });
+    return response.status(200).json({ success: true, cart: cart[userId] });
   } else {
     return response.status(403).json({ message: "Вы не авторизованы" });
   }
 };
 export const deleteDeviceFromCart = (request, response) => {
-  const isAuth = isUserAuth(request);
-  if (isAuth) {
-    const { userId, id } = request.body;
+  const user = isUserAuth(request);
+  if (user) {
+    const userId = user.id;
+    const { id } = request.body;
     if (!cart[userId]) {
       return response
         .status(403)
@@ -84,9 +85,10 @@ export const deleteDeviceFromCart = (request, response) => {
   }
 };
 export const changeCheckboxForDevice = (request, response) => {
-  const isAuth = isUserAuth(request);
-  if (isAuth) {
-    const { userId, id } = request.body;
+  const user = isUserAuth(request);
+  if (user) {
+    const userId = user.id;
+    const { id } = request.body;
     if (!cart[userId]) {
       return response
         .status(403)

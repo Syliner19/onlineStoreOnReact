@@ -10,15 +10,19 @@ import {
 export const addDeviceToCartApi = async (userId, deviceId, count = 1) => {
   return axios.post(`/api${CART_ROUTE_ADD}`, { userId, deviceId, count });
 };
-export const fetchCartByUserId = async (id) => {
-  const response = await axios.get(`/api${CART_ROUTE}/${id}`);
+export const fetchCartByUserId = async () => {
+  const response = await axios.get(`/api${CART_ROUTE}`);
   return response.data;
 };
-export const deleteDeviceFromCartApi = async (userId, id) => {
-  return axios.delete(`/api${CART_ROUTE_DELETE}`, { data: { userId, id } });
+export const deleteDeviceFromCartApi = async (id) => {
+  const response = await axios.delete(`/api${CART_ROUTE_DELETE}`, {
+    data: { id },
+  });
+  return response.data;
 };
-export const changeCheckboxForDeviceApi = async (userId, id) => {
-  return axios.post(`/api${CART_CHECKBOX_CONTROL}`, { userId, id });
+export const changeCheckboxForDeviceApi = async (id) => {
+  const response = await axios.post(`/api${CART_CHECKBOX_CONTROL}`, { id });
+  return response.data;
 };
 export const fetchCheckedDevices = async (userId) => {
   const response = await axios.get(`/api${CART_CHECKBOX_CONTROL}/${userId}`);

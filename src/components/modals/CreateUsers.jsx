@@ -41,7 +41,6 @@ const CreateUsers = ({ show, onHide }) => {
     setError("");
     try {
       const loadedUsers = await fetchSearchingUsers(inputValue);
-      console.log(loadedUsers);
       setSearchingUsers(loadedUsers);
       setError("");
     } catch (e) {
@@ -103,12 +102,9 @@ const CreateUsers = ({ show, onHide }) => {
   const handleChangeRole = async (userId, newRole) => {
     setUpdatingUserId(userId);
     setError("");
-    console.log(userId);
-    console.log(newRole);
 
     try {
       const response = await updateUserRoleApi(userId, newRole);
-      console.log(response);
       if (response && response.success) {
         setSearchingUsers((prev) =>
           prev.map((user) =>
@@ -129,15 +125,12 @@ const CreateUsers = ({ show, onHide }) => {
       setError("");
       const response = await deleteTypeApi(typeId);
       const updatedType = await fetchTypesApi();
-      console.log(updatedType);
       dispatch(setTypes(updatedType));
       handleClose();
     } catch ({ response }) {
       setError(response.data.message);
-      console.log(error);
     }
   };
-  console.log(searchingUsers);
   return (
     <Modal size="lg" centered show={show} onHide={onHide}>
       <Modal.Header closeButton>
