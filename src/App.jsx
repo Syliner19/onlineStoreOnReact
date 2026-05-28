@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar setCartVisible={setCartVisible} />
-      <AppRouter></AppRouter>
+      <AppRouter />
       {cartVisible ? (
         <Cart
           onHide={() => {

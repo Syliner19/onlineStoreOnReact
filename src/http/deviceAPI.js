@@ -6,11 +6,11 @@ import {
   TYPES_ROUTE,
 } from "../utils/const.js";
 
-export const fetchDevicesApi = async () => {
+export const getDevices = async () => {
   const response = await axios.get(`/api${DEVICES_ROUTE}`);
   return response.data.devices;
 };
-export const fetchDeviceByIdApi = async (id) => {
+export const getDeviceById = async (id) => {
   const response = await axios.get(`/api${DEVICE_ROUTE}/${id}`);
   return response.data.device;
 };
