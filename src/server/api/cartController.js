@@ -3,9 +3,10 @@ import { cart, devices } from "../bd.js";
 import { isUserAuth } from "./helpers.js";
 
 export const addDeviceToCart = (request, response) => {
-  const isAuth = isUserAuth(request);
-  if (isAuth) {
-    const { userId, deviceId, count } = request.body;
+  const user = isUserAuth(request);
+  if (user) {
+    const userId = user.id;
+    const {deviceId, count } = request.body;
     const device = devices.find((device) => device.id === deviceId);
     const cartDevice = { ...device, count: count, checked: false };
     if (!device) {

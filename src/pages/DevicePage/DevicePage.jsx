@@ -1,44 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-import bigStar from "../assets/bigStar.png";
+import bigStar from "../../assets/bigStar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   selectDeviceById,
   selectIsAuth,
-  selectUserId,
-} from "../store/selectors";
-import { fetchDeviceByIdApi } from "../http/deviceAPI";
-import { addDeviceToCart } from "../store/actions";
-import { addDeviceToCartApi } from "../http/cartAPI";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+} from "../../store/selectors";
+import { addDeviceToCart } from "../../store/actions";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useAddDevice, useGetDevice } from "./hooks";
 
 const DevicePage = () => {
   const { id } = useParams();
   const [device, setDevice] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const userId = useSelector(selectUserId);
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
   const [notAuthCart, setNotAuthCart] = useLocalStorage("cart", {
     devices: [],
     totalPrice: 0,
   });
+
+  const { getDevice, isLoading, error: errorMessage } = useGetDevice();
+  const { addDevice } = useAddDevice();
+
   useEffect(() => {
-    setErrorMessage("");
-    setIsLoading(true);
-    fetchDeviceByIdApi(id)
-      .then((resp) => setDevice(resp))
-      .catch(({ response }) => setErrorMessage(response.data.message))
-      .finally(() => setIsLoading(false));
+    getDevice(id).then((resp) => setDevice(resp))
   }, [id]);
 
-  const handleAddDeviceToCart = async (userId, deviceId) => {
+  const handleAddDeviceToCart = async (deviceId) => {
     try {
       if (isAuth) {
-        const response = await addDeviceToCartApi(userId, deviceId);
+        const response = await addDevice({ deviceId });
       } else {
+        // TODO: этот блок невалидный
         setNotAuthCart((prev) => {
           const existingDevice = prev.devices.findIndex(
             (dev) => dev.id === deviceId,
@@ -116,7 +111,7 @@ const DevicePage = () => {
             <Button
               variant={"outline-dark"}
               onClick={() => {
-                handleAddDeviceToCart(userId, device.id);
+                handleAddDeviceToCart(device.id);
               }}
             >
               Добавить в корзину

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -12,21 +12,17 @@ import {
   Row,
 } from "react-bootstrap";
 import {
-  useCartByUserId,
-  useChekedDeviceFromCartById,
-  useDeleteDeviceFromCartById,
+  useGetCart,
+  useGetCheckedDevicesFromCart,
+  useDeleteDeviceFromCart,
 } from "./hooks";
 import { getCheckedDevicesFromCart } from "./helpers";
 
 const Cart = ({ onHide }) => {
   const [cart, setCart] = useState({ devices: [], totalPrice: 0 });
-  const { deleteDevice } = useDeleteDeviceFromCartById();
-  const { checkDevice } = useChekedDeviceFromCartById();
-  const { initialCart, error, isLoading } = useCartByUserId();
-
-  useEffect(() => {
-    setCart(initialCart);
-  }, [initialCart]);
+  const { deleteDevice } = useDeleteDeviceFromCart();
+  const { checkDevice } = useGetCheckedDevicesFromCart();
+  const { cart: initialCart } = useGetCart();
 
   const handleChekboxChange = async (id) => {
     const resp = await checkDevice(id);
@@ -37,6 +33,11 @@ const Cart = ({ onHide }) => {
     const resp = await deleteDevice(id);
     setCart(resp.cart);
   };
+
+  useEffect(() => {
+    setCart(initialCart);
+  }, [initialCart])
+
   return (
     <Modal size="lg" centered show onHide={onHide}>
       <Modal.Header closeButton>
