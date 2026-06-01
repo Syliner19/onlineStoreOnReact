@@ -1,10 +1,10 @@
 import { request, response } from "express";
 import { roles, sessions, users } from "../bd.js";
-import { isUserAuth } from "./helpers.js";
+import { getUserFromSession } from "./helpers.js";
 import { MAIN_URL } from "../../utils/const.js";
 
 export const getUser = (request, response) => {
-  const user = isUserAuth(request);
+  const user = getUserFromSession(request);
   if (!user) {
     return response
       .status(401)
@@ -15,7 +15,7 @@ export const getUser = (request, response) => {
   });
 };
 export const getRoles = (request, response) => {
-  const user = isUserAuth(request);
+  const user = getUserFromSession(request);
   if (!user) {
     return response
       .status(401)
@@ -26,7 +26,7 @@ export const getRoles = (request, response) => {
     .json({ success: true, count: roles.length, roles });
 };
 export const addUser = (request, response) => {
-  const user = isUserAuth(request);
+  const user = getUserFromSession(request);
   if (!user) {
     return response
       .status(401)
@@ -77,7 +77,7 @@ export const searchUsers = (request, response) => {
       .status(400)
       .json({ success: false, message: "Имя обязательно для поиска" });
   }
-  const isAuth = isUserAuth(request);
+  const isAuth = getUserFromSession(request);
   if (!isAuth) {
     return response
       .status(401)
@@ -98,7 +98,7 @@ export const searchUsers = (request, response) => {
   });
 };
 export const deleteUser = (request, response) => {
-  const isAuth = isUserAuth(request);
+  const isAuth = getUserFromSession(request);
   if (!isAuth) {
     return response
       .status(401)
@@ -120,19 +120,19 @@ export const deleteUser = (request, response) => {
   });
 };
 export const changeRole = (request, response) => {
-  const isAuth = isUserAuth(request);
-  if (!isAuth) {
+  const user = getUserFromSession(request);
+  if (!user) {
     return response
       .status(401)
       .json({ message: "Пользователь не авторизован" });
   }
   const { id, role } = request.body;
-  const user = users.find((user) => user.id === id);
-  if (user) {
-    user.role = role;
+  const findedUser = users.find((user) => user.id === id);
+  if (findedUser) {
+    findedUser.role = role;
   }
   return response.status(200).json({
     success: true,
-    message: `У пользователя ${user.name} изменена роль на ${user.role}`,
+    message: `У пользователя ${user.name} изменена роль на ${findedUser.role}`,
   });
 };

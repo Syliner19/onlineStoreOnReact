@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, CloseButton, Form, ListGroup, Modal } from "react-bootstrap";
-import { addTypeApi, deleteTypeApi, fetchTypesApi } from "../../http/deviceAPI";
+import { addTypeApi, deleteTypeApi, fetchTypesApi } from "../../http/typesAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { addType, setSelectType, setTypes } from "../../store/actions";
 import { selectTypes } from "../../store/selectors";

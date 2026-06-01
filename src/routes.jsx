@@ -2,7 +2,7 @@ import AdminPage from "./pages/AdminPage";
 import Auth from "./pages/Auth";
 import Basket from "./pages/Basket";
 import CompleteRegistration from "./pages/CompleteRegistration";
-import DevicePage from "./pages/DevicePage";
+import DevicePage from "./pages/DevicePage/DevicePage";
 import Shop from "./pages/Shop";
 import {
   ADMIN_ROUTE,

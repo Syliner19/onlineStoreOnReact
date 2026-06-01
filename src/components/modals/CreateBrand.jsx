@@ -5,7 +5,7 @@ import {
   addBrandApi,
   deleteBrandApi,
   fetchBrandApi,
-} from "../../http/deviceAPI";
+} from "../../http/brandsAPI";
 import { addBrand, setBrands } from "../../store/actions";
 
 const CreateBrand = ({ show, onHide }) => {

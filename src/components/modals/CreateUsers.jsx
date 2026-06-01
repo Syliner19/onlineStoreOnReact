@@ -7,7 +7,7 @@ import {
   ListGroup,
   Modal,
 } from "react-bootstrap";
-import { addTypeApi, deleteTypeApi, fetchTypesApi } from "../../http/deviceAPI";
+import { addTypeApi, deleteTypeApi, fetchTypesApi } from "../../http/typesAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { addType, setSelectType, setTypes } from "../../store/actions";
 import { selectTypes, selectUser } from "../../store/selectors";

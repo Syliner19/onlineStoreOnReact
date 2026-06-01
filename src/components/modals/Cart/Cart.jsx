@@ -12,17 +12,17 @@ import {
   Row,
 } from "react-bootstrap";
 import {
-  useCartByUserId,
-  useChekedDeviceFromCartById,
-  useDeleteDeviceFromCartById,
+  useChekedDeviceFromCart,
+  useDeleteDeviceFromCart,
+  useGetCart,
 } from "./hooks";
 import { getCheckedDevicesFromCart } from "./helpers";
 
 const Cart = ({ onHide }) => {
   const [cart, setCart] = useState({ devices: [], totalPrice: 0 });
-  const { deleteDevice } = useDeleteDeviceFromCartById();
-  const { checkDevice } = useChekedDeviceFromCartById();
-  const { initialCart, error, isLoading } = useCartByUserId();
+  const { deleteDevice } = useDeleteDeviceFromCart();
+  const { checkDevice } = useChekedDeviceFromCart();
+  const { cart: initialCart, error, isLoading, trigger } = useGetCart();
 
   useEffect(() => {
     setCart(initialCart);
@@ -30,13 +30,16 @@ const Cart = ({ onHide }) => {
 
   const handleChekboxChange = async (id) => {
     const resp = await checkDevice(id);
-    setCart(resp.cart);
+    setCart(resp);
+    trigger();
   };
 
   const handleDeleteDevice = async (id) => {
     const resp = await deleteDevice(id);
-    setCart(resp.cart);
+    setCart(resp);
+    trigger();
   };
+
   return (
     <Modal size="lg" centered show onHide={onHide}>
       <Modal.Header closeButton>

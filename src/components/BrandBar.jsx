@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectBrands, selectSelectedBrand } from "../store/selectors";
 import { Card, Row } from "react-bootstrap";
 import { setBrands, setSelectBrand } from "../store/actions";
-import { fetchBrandApi } from "../http/deviceAPI";
+import { fetchBrandApi } from "../http/brandsAPI";
 
 const BrandBar = () => {
   const selectedBrand = useSelector(selectSelectedBrand);

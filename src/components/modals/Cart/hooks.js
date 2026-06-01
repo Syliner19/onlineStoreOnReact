@@ -1,42 +1,43 @@
-import { useFetchById } from "../../../api/hooks/useFetchById.js";
-import { useFetchByUserId } from "../../../api/hooks/useFetchByUserId.js";
+import { useFetch } from "../../../api/hooks/useFetch.js";
 import {
-  changeCheckboxForDeviceApi,
-  deleteDeviceFromCartApi,
-  fetchCartByUserId,
-} from "../../../http/cartAPI";
+  toggleDeviceCheckbox,
+  deleteDeviceFromCart,
+  getCart,
+} from "../../../http/cartAPI.js";
 
-export const useCartByUserId = () => {
-  const {
-    response = { cart: { devices: [], totalPrice: 0 } },
-    error,
-    isLoading,
-  } = useFetchByUserId(fetchCartByUserId);
-  return { initialCart: response.cart, error, isLoading };
-};
-
-export const useDeleteDeviceFromCartById = () => {
+export const useGetCart = () => {
   const {
     response = { cart: { devices: [], totalPrice: 0 } },
     error,
     isLoading,
     trigger,
-  } = useFetchById(deleteDeviceFromCartApi);
+  } = useFetch(getCart, { autoTrigger: true });
+  console.log(response);
+  return { cart: response.cart, error, isLoading, trigger };
+};
+
+export const useDeleteDeviceFromCart = () => {
+  const {
+    response = { cart: { devices: [], totalPrice: 0 } },
+    error,
+    isLoading,
+    trigger,
+  } = useFetch(deleteDeviceFromCart);
   return {
-    cart: response.cart,
+    cart: response?.cart || { devices: [], totalPrice: 0 },
     error,
     isLoading,
     deleteDevice: trigger,
   };
 };
 
-export const useChekedDeviceFromCartById = () => {
+export const useChekedDeviceFromCart = () => {
   const {
     response = { cart: { devices: [], totalPrice: 0 } },
     error,
     isLoading,
     trigger,
-  } = useFetchById(changeCheckboxForDeviceApi);
+  } = useFetch(toggleDeviceCheckbox);
   return {
     cart: response.cart,
     error,

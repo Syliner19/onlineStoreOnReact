@@ -1,5 +1,5 @@
 import { useFetch } from "../../../api/hooks/useFetch";
-import { addDeviceApi } from "../../../http/deviceAPI";
+import { createNewDevice } from "../../../http/deviceAPI";
 
 export const useDescription = (watch, setValue) => {
   const description = watch("description");
@@ -47,6 +47,6 @@ export const useDescription = (watch, setValue) => {
   };
 };
 export const useAddDevice = () => {
-  const { response, error, isLoading, trigger } = useFetch(addDeviceApi);
+  const { response, error, isLoading, trigger } = useFetch(createNewDevice);
   return { response, error, isLoading, addDevice: trigger };
 };

@@ -1,11 +1,12 @@
 import { request, response } from "express";
 import { cart, devices } from "../bd.js";
-import { isUserAuth } from "./helpers.js";
+import { getUserFromSession } from "./helpers.js";
 
 export const addDeviceToCart = (request, response) => {
-  const isAuth = isUserAuth(request);
-  if (isAuth) {
-    const { userId, deviceId, count } = request.body;
+  const user = getUserFromSession(request);
+  if (user) {
+    const userId = user.id;
+    const { deviceId, count } = request.body;
     const device = devices.find((device) => device.id === deviceId);
     const cartDevice = { ...device, count: count, checked: false };
     if (!device) {
@@ -42,7 +43,7 @@ export const addDeviceToCart = (request, response) => {
 };
 
 export const getCartByUserId = (request, response) => {
-  const user = isUserAuth(request);
+  const user = getUserFromSession(request);
   if (user) {
     const userId = user.id;
     if (!cart[userId]) {
@@ -58,7 +59,7 @@ export const getCartByUserId = (request, response) => {
   }
 };
 export const deleteDeviceFromCart = (request, response) => {
-  const user = isUserAuth(request);
+  const user = getUserFromSession(request);
   if (user) {
     const userId = user.id;
     const { id } = request.body;
@@ -85,7 +86,7 @@ export const deleteDeviceFromCart = (request, response) => {
   }
 };
 export const changeCheckboxForDevice = (request, response) => {
-  const user = isUserAuth(request);
+  const user = getUserFromSession(request);
   if (user) {
     const userId = user.id;
     const { id } = request.body;
@@ -115,7 +116,7 @@ export const changeCheckboxForDevice = (request, response) => {
 };
 
 export const getChekedDevices = (request, response) => {
-  const isAuth = isUserAuth(request);
+  const isAuth = getUserFromSession(request);
   if (isAuth) {
     const { userId } = request.params;
     const filteredDevices = cart[userId].devices.filter(

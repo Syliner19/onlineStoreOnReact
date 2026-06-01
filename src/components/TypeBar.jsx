@@ -7,7 +7,7 @@ import {
 } from "../store/selectors";
 import { ListGroup } from "react-bootstrap";
 import { setSelectType, setTypes } from "../store/actions";
-import { fetchTypesApi } from "../http/deviceAPI";
+import { fetchTypesApi } from "../http/typesAPI";
 
 const TypeBar = () => {
   const dispatch = useDispatch();
