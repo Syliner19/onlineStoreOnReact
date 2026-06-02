@@ -13,7 +13,7 @@ const DeviceBuyCard = ({ onClick, device }) => {
       }}
     >
       <h3>От: {device.price} руб.</h3>
-      <Button variant={"outline-dark"} onClick={onClick}>
+      <Button variant={"outline-dark"} onClick={() => onClick(device.id)}>
         Добавить в корзину
       </Button>
     </Card>

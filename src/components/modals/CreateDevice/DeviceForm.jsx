@@ -7,8 +7,8 @@ import UniversalDropdown from "./UniversalDropdown";
 import FormInputs from "./FormInputs";
 import DescriptionField from "./DescriptionField";
 
-const DeviceForm = ({ types, brands }) => {
-  const { handleSubmit, reset } = useContext(FormContext);
+const DeviceForm = () => {
+  const { handleSubmit, reset, types, brands } = useContext(FormContext);
   const { addDevice } = useAddDevice();
 
   const onSubmit = async (data) => {

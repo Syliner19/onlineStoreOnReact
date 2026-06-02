@@ -47,13 +47,7 @@ const DevicePage = () => {
           <DeviceRating device={device} />
         </Col>
         <Col md={4}>
-          <DeviceBuyCard
-            device={device}
-            onClick={() => {
-              console.log(`Попал ${device.id}`);
-              handleAddDeviceToCart(device.id);
-            }}
-          />
+          <DeviceBuyCard device={device} onClick={handleAddDeviceToCart} />
         </Col>
       </Row>
       <DeviceDescription description={description} />

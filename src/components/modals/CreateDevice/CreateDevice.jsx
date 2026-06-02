@@ -1,14 +1,9 @@
 import { Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { selectBrands, selectTypes } from "../../../store/selectors";
 import FormActions from "./FormActions.jsx";
 import { FormProvider } from "./FormContext.jsx";
 import DeviceForm from "./DeviceForm.jsx";
 
 const CreateDevice = ({ show, onHide }) => {
-  const types = useSelector(selectTypes);
-  const brands = useSelector(selectBrands);
-
   return (
     <Modal size="lg" centered show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -18,7 +13,7 @@ const CreateDevice = ({ show, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <FormProvider>
-          <DeviceForm types={types} brands={brands} />
+          <DeviceForm />
         </FormProvider>
       </Modal.Body>
       <FormActions onHide={onHide} />
