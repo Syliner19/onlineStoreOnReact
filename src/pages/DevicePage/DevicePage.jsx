@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-
-import { useSelector } from "react-redux";
+import React from "react";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { selectIsAuth } from "../../store/selectors";
 import { useAddDevice, useGetDevice } from "./hooks";
 import DeviceDescription from "./DeviceDescription";
 import DeviceRating from "./DeviceRating";
@@ -11,20 +8,12 @@ import DeviceBuyCard from "./DeviceBuyCard";
 
 const DevicePage = () => {
   const { id } = useParams();
-  const [device, setDevice] = useState(null);
-  const isAuth = useSelector(selectIsAuth);
-  const { getDevice, isLoading, error } = useGetDevice();
+  const { device, getDevice, isLoading, error } = useGetDevice(id);
   const { addDevice } = useAddDevice();
-
-  useEffect(() => {
-    getDevice(id).then((resp) => setDevice(resp));
-  }, [id]);
 
   const handleAddDeviceToCart = async (deviceId) => {
     try {
-      if (isAuth) {
-        const response = await addDevice({ deviceId });
-      }
+      const response = await addDevice({ deviceId });
     } catch (e) {
       console.error("Error loading cart:", e);
     }

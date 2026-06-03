@@ -12,7 +12,6 @@ export const addDeviceToCart = async ({ deviceId, count = 1 }) => {
     deviceId,
     count,
   });
-  console.log(response.data);
   return response.data;
 };
 export const getCart = async () => {

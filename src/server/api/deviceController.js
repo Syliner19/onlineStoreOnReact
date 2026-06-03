@@ -38,7 +38,7 @@ export const addType = (request, response) => {
   types.push(type);
   return response
     .status(200)
-    .json({ message: `Добавлен новый тип ${type.name}`, type });
+    .json({ message: `Добавлен новый тип ${type.name}`, type, types });
 };
 export const getTypes = (request, response) => {
   try {
@@ -72,6 +72,7 @@ export const deleteType = (request, response) => {
       success: true,
       message: `Тип ${deletedType.name} удален`,
       deletedType,
+      types,
     });
   } catch (e) {
     return response

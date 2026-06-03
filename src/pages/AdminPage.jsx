@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import CreateBrand from "../components/modals/CreateBrand/CreateBrand";
-import CreateType from "../components/modals/CreateType";
+import CreateType from "../components/modals/CreateType/CreateType";
 import CreateDevice from "../components/modals/CreateDevice/CreateDevice";
 import CreateUsers from "../components/modals/CreateUsers";
+import { CreateTypeProvider } from "../components/modals/CreateType/CreateTypeContext";
 
 const AdminPage = () => {
   const [brandVisible, setBrandVisible] = useState(false);
@@ -55,12 +56,14 @@ const AdminPage = () => {
           setBrandVisible(false);
         }}
       />
-      <CreateType
-        show={typeVisible}
-        onHide={() => {
-          setTypeVisible(false);
-        }}
-      />
+      <CreateTypeProvider>
+        <CreateType
+          show={typeVisible}
+          onHide={() => {
+            setTypeVisible(false);
+          }}
+        />
+      </CreateTypeProvider>
       <CreateDevice
         show={deviceVisible}
         onHide={() => {

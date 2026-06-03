@@ -51,6 +51,7 @@ const Cart = ({ onHide }) => {
 
       <CartFooter
         onHide={onHide}
+        cart={cart}
         getCheckedDevicesFromCart={getCheckedDevicesFromCart}
       />
     </Modal>
