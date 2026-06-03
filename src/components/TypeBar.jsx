@@ -1,32 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectDevices,
-  selectSelectedType,
-  selectTypes,
-} from "../store/selectors";
+import React, { useState } from "react";
 import { ListGroup } from "react-bootstrap";
-import { setSelectType, setTypes } from "../store/actions";
-import { fetchTypesApi } from "../http/typesAPI";
+import { useGetTypes } from "./modals/CreateType/hooks";
 
 const TypeBar = () => {
-  const dispatch = useDispatch();
-  const types = useSelector(selectTypes);
-  const selectedType = useSelector(selectSelectedType);
-  useEffect(() => {
-    fetchTypesApi()
-      .then((brandsFromApi) => dispatch(setTypes(brandsFromApi)))
-      .catch((e) => console.log(e));
-  }, [dispatch]);
+  const { types, getTypes } = useGetTypes();
+  const [selectedType, setSelectedType] = useState("");
+
   return (
     <ListGroup>
       {types.map((type) => (
         <ListGroup.Item
           style={{ cursor: "pointer" }}
-          active={type.id === selectedType.id}
+          active={type.id === selectedType}
           key={type.id}
           onClick={() => {
-            dispatch(setSelectType(type));
+            setSelectedType(type.id);
           }}
         >
           {type.name}

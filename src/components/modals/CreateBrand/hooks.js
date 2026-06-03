@@ -1,5 +1,9 @@
 import { useFetch } from "../../../api/hooks/useFetch";
-import { addBrandApi, deleteBrandApi } from "../../../http/brandsAPI";
+import {
+  addBrandApi,
+  deleteBrandApi,
+  fetchBrandApi,
+} from "../../../http/brandsAPI";
 
 export const useAddBrand = () => {
   const { response, error, isLoading, trigger } = useFetch(addBrandApi);
@@ -9,4 +13,11 @@ export const useAddBrand = () => {
 export const useDeleteBrand = () => {
   const { response, error, isLoading, trigger } = useFetch(deleteBrandApi);
   return { error, isLoading, deleteBrand: trigger };
+};
+
+export const useGetBrands = () => {
+  const { response, error, isLoading, trigger } = useFetch(fetchBrandApi, {
+    autoTrigger: true,
+  });
+  return { brands: response || [], error, isLoading, getBrands: trigger };
 };
