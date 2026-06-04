@@ -38,17 +38,13 @@ export const fetchRoles = async () => {
     .then((response) => response.data.roles);
 };
 export const addUserApi = async (email, role) => {
-  try {
-    const response = await axios.post(`/api${USER_ROUTE}`, {
-      email,
-      password: null,
-      role,
-    });
-    return response.data;
-  } catch (e) {
-    console.log("Ошибка");
-    throw e;
-  }
+  const response = await axios.post(`/api${USER_ROUTE}`, {
+    email,
+    password: null,
+    role,
+  });
+  console.log(response);
+  return response.data;
 };
 export const confirmPasswordApi = async (email, password) => {
   return axios.post(

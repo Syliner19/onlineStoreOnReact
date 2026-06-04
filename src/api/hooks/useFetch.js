@@ -29,8 +29,11 @@ export const useFetch = (fetchFn, options = {}) => {
           return;
         }
         const message =
-          e.response?.message || e.message || "Неизвестная ошибка";
-        setError(`Ошибка ${message}`);
+          e.response?.data.message ||
+          e.response?.message ||
+          e.message ||
+          "Неизвестная ошибка";
+        setError(`Ошибка. ${message}`);
         setIsSuccess(false);
         throw e;
       } finally {

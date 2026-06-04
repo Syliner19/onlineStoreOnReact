@@ -26,7 +26,7 @@ const CompleteRegistration = () => {
     }
   }, [email]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (email, password) => {
     if (password !== confirmPassword) {
       setError("Пароли не совпадают");
       return;
@@ -34,6 +34,7 @@ const CompleteRegistration = () => {
     setError("");
     try {
       const response = await confirmPasswordApi(email, password);
+      console.log("Попал");
       if (response.data.success) {
         setSuccess(true);
       } else {
@@ -107,7 +108,7 @@ const CompleteRegistration = () => {
               <Button
                 variant={"outline-success"}
                 className="mt-3"
-                onClick={handleSubmit}
+                onClick={() => handleSubmit(email, password)}
               >
                 Сохранить пароль
               </Button>

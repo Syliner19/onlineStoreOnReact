@@ -11,6 +11,7 @@ export const getUser = (request, response) => {
       .json({ message: "Пользователь не авторизован" });
   }
   return response.status(200).json({
+    success: true,
     user: { id: user.id, email: user.email, role: user.role },
   });
 };
@@ -33,6 +34,11 @@ export const addUser = (request, response) => {
       .json({ message: "Пользователь не авторизован" });
   }
   const { email, password, role } = request.body;
+  if (!roles.some((r) => r.name === role)) {
+    return response
+      .status(401)
+      .json({ success: false, message: "Выберите роль!" });
+  }
   if (users.some((user) => user.email === email)) {
     return response
       .status(401)
@@ -73,9 +79,11 @@ export const completeRegistration = (request, response) => {
 export const searchUsers = (request, response) => {
   const { name } = request.query;
   if (!name) {
-    return response
-      .status(400)
-      .json({ success: false, message: "Имя обязательно для поиска" });
+    return response.status(200).json({
+      success: true,
+      message: "Введите имя для поиска",
+      users: [],
+    });
   }
   const isAuth = getUserFromSession(request);
   if (!isAuth) {
@@ -113,10 +121,11 @@ export const deleteUser = (request, response) => {
   }
   const deletedUser = users[userIndex];
   users.splice(userIndex, 1);
+  const { password, ...userWithoutPassword } = deletedUser;
   return response.status(200).json({
     success: true,
     message: `Пользователь ${deletedUser.email} успешно удален`,
-    deletedUser,
+    user: userWithoutPassword,
   });
 };
 export const changeRole = (request, response) => {
