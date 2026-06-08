@@ -6,9 +6,11 @@ import { MAIN_URL } from "../../utils/const.js";
 export const getUser = (request, response) => {
   const user = getUserFromSession(request);
   if (!user) {
-    return response
-      .status(401)
-      .json({ message: "Пользователь не авторизован" });
+    return response.status(200).json({
+      message: "Пользователь не авторизован",
+      success: false,
+      user: { id: "", email: "", role: "" },
+    });
   }
   return response.status(200).json({
     success: true,

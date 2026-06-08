@@ -29,7 +29,7 @@ export const logout = () => {
 };
 
 export const user = async () => {
-  return axios.get(`/api${USER_ROUTE}`).then((response) => response.data.user);
+  return axios.get(`/api${USER_ROUTE}`).then((response) => response.data);
 };
 
 export const fetchRoles = async () => {

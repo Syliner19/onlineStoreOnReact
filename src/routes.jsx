@@ -1,5 +1,5 @@
 import AdminPage from "./pages/AdminPage";
-import Auth from "./pages/Auth";
+import Auth from "./pages/AuthOrLoginPage/Auth";
 import Basket from "./pages/Basket";
 import CompleteRegistration from "./pages/CompleteRegistration";
 import DevicePage from "./pages/DevicePage/DevicePage";

@@ -2,6 +2,8 @@ import React, { createContext } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectBrands, selectTypes } from "../../../store/selectors";
+import { useGetBrands } from "../CreateBrand/hooks";
+import { useGetTypes } from "../CreateType/hooks";
 export const FormContext = createContext(null);
 export const FormProvider = ({ children }) => {
   const {
@@ -22,8 +24,9 @@ export const FormProvider = ({ children }) => {
       description: [],
     },
   });
-  const types = useSelector(selectTypes);
-  const brands = useSelector(selectBrands);
+  useGetBrands();
+  const { types } = useGetTypes();
+  const { brands } = useGetBrands();
   const values = {
     control,
     register,

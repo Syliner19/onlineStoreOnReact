@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, replace, Route, Routes } from "react-router-dom";
 import { adminRoutes, authRoutes, publicRoutes } from "../routes";
-import { useSelector } from "react-redux";
-import { selectIsAdmin, selectIsAuth, selectRole } from "../store/selectors";
+import { useUserRole } from "../hooks/useUserRole";
+import { UserContext } from "../context/userContext";
 
 const AppRouter = () => {
-  const isAuth = useSelector(selectIsAuth);
-  const isAdmin = useSelector(selectIsAdmin);
+  const { isAuth, isAdmin } = useContext(UserContext);
+
   return (
     <Routes>
       {isAuth &&

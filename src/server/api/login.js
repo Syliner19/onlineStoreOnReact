@@ -11,6 +11,8 @@ export const login = (request, response) => {
   }
   const sessionId = `token-${Date.now()}-${user.role}`;
   sessions[sessionId] = user.id;
+  console.log("✅ Сессия сохранена:", sessionId, "→", user.id);
+  console.log("📦 Текущие сессии:", sessions);
   return response
     .status(200)
     .cookie("session", sessionId, { httpOnly: true, secure: true })
