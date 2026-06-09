@@ -2,14 +2,14 @@ import React from "react";
 import { ListGroup } from "react-bootstrap";
 import CartItem from "./CartItem";
 
-const CartList = ({ cart, handleChekboxChange, handleDeleteDevice }) => {
+const CartList = ({ cart, handleCheckboxChange, handleDeleteDevice }) => {
   return (
     <ListGroup className="d-flex">
       {cart.devices.map((device) => (
         <CartItem
           key={device.id}
           device={device}
-          handleChekboxChange={handleChekboxChange}
+          handleCheckboxChange={handleCheckboxChange}
           handleDeleteDevice={handleDeleteDevice}
         />
       ))}

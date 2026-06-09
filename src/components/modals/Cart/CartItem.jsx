@@ -1,7 +1,7 @@
 import React from "react";
 import { CloseButton, Form, Image, ListGroup } from "react-bootstrap";
 
-const CartItem = ({ device, handleChekboxChange, handleDeleteDevice }) => {
+const CartItem = ({ device, handleCheckboxChange, handleDeleteDevice }) => {
   return (
     <ListGroup.Item className="d-flex justify-content-between w-100">
       <div className="d-flex align-items-center gap-3 w-100">
@@ -12,7 +12,7 @@ const CartItem = ({ device, handleChekboxChange, handleDeleteDevice }) => {
           checked={device.checked}
           style={{ boxShadow: "none" }}
           onChange={() => {
-            handleChekboxChange(device.id);
+            handleCheckboxChange(device.id);
           }}
         />
         <div style={{ width: 50 }}>

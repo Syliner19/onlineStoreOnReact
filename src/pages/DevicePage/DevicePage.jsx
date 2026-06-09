@@ -5,6 +5,7 @@ import { useAddDevice, useGetDevice } from "./hooks";
 import DeviceDescription from "./DeviceDescription";
 import DeviceRating from "./DeviceRating";
 import DeviceBuyCard from "./DeviceBuyCard";
+import Loader from "../../components/Loader";
 
 const DevicePage = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const DevicePage = () => {
   };
 
   if (isLoading) {
-    return <div>Загрузка...</div>;
+    return <Loader />;
   }
   if (!device) {
     return <div style={{ color: "red" }}>{error}</div>;

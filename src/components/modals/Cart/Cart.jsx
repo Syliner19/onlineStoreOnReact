@@ -11,28 +11,19 @@ import CartFooter from "./CartFooter";
 import CartEmpty from "./CartEmpty";
 
 const Cart = ({ onHide }) => {
-  const [cart, setCart] = useState({ devices: [], totalPrice: 0 });
   const { deleteDevice } = useDeleteDeviceFromCart();
   const { checkDevice } = useChekedDeviceFromCart();
-  const { cart: initialCart, error, isLoading, trigger } = useGetCart();
+  const { cart, error, isLoading, trigger, isEmpty } = useGetCart();
 
-  useEffect(() => {
-    setCart(initialCart);
-  }, [initialCart]);
-
-  const handleChekboxChange = async (id) => {
+  const handleCheckboxChange = async (id) => {
     const resp = await checkDevice(id);
-    setCart(resp.cart);
     trigger();
   };
 
   const handleDeleteDevice = async (id) => {
     const resp = await deleteDevice(id);
-    setCart(resp.cart);
     trigger();
   };
-
-  const isEmpty = cart?.devices.length === 0;
 
   return (
     <Modal size="lg" centered show onHide={onHide}>
@@ -44,7 +35,7 @@ const Cart = ({ onHide }) => {
       ) : (
         <CartList
           cart={cart}
-          handleChekboxChange={handleChekboxChange}
+          handleCheckboxChange={handleCheckboxChange}
           handleDeleteDevice={handleDeleteDevice}
         />
       )}

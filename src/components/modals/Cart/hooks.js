@@ -27,6 +27,7 @@ export const useDeleteDeviceFromCart = () => {
     cart: response?.cart || { devices: [], totalPrice: 0 },
     error,
     isLoading,
+    isEmpty: response?.cart?.devices.length === 0 || false,
     deleteDevice: trigger,
   };
 };

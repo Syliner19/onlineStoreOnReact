@@ -2,12 +2,13 @@ import React from "react";
 import DeviceItem from "../DeviceItem";
 import { Col, Row } from "react-bootstrap";
 import { useGetDevices, useNavidateDevice } from "./hooks";
+import Loader from "../Loader";
 
 const DeviceList = () => {
   const { devices, error, isLoading } = useGetDevices();
   const goToDevice = useNavidateDevice();
   if (isLoading && !error) {
-    return <div>Загрузка...</div>;
+    return <Loader />;
   }
   return (
     <Row>
