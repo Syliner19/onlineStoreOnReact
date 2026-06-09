@@ -1,7 +1,7 @@
 import AdminPage from "./pages/AdminPage";
 import Auth from "./pages/AuthOrLoginPage/Auth";
 import Basket from "./pages/Basket";
-import CompleteRegistration from "./pages/CompleteRegistration";
+import CompleteRegistration from "./pages/CompleteRegistrationPage/CompleteRegistration";
 import DevicePage from "./pages/DevicePage/DevicePage";
 import Shop from "./pages/Shop";
 import {
