@@ -1,14 +1,13 @@
-import React, { memo, useContext } from "react";
+import { memo, useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { useUserRole } from "../../hooks/useUserRole";
 import {
   useLogout,
   useNavigateAdmin,
   useNavigateLogin,
+  useNavigateShop,
 } from "../../pages/AuthOrLoginPage/hooks";
 import { UserContext } from "../../context/userContext";
-import NavBarButton from "./NavBarButton";
 import AuthNav from "./AuthNav";
 import GuestNav from "./GuestNav";
 import NavBarTitle from "./NavBarTitle";
@@ -18,13 +17,16 @@ const NavBar = memo(({ setCartVisible }) => {
   const { logout } = useLogout();
   const goToLogin = useNavigateLogin();
   const goToAdmin = useNavigateAdmin();
+  const goToShop = useNavigateShop();
 
   const handleLogout = async () => {
     try {
       await logout();
       await refresh();
       goToShop();
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

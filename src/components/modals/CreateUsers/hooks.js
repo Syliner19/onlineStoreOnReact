@@ -30,7 +30,7 @@ export const useAddUser = () => {
     trigger,
   } = useFetch(addUserApi);
   return {
-    user: response?.user || { id, email, role },
+    user: response?.user || { id: "", email: "", role: "" },
     addUserError: error,
     isLoading,
     addUser: trigger,

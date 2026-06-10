@@ -1,5 +1,3 @@
-import React from "react";
-
 const BrandNotFound = ({ error }) => {
   return (
     <span style={{ color: "red" }} className="d-flex justify-content-center">

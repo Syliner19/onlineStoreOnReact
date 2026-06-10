@@ -1,4 +1,3 @@
-import React from "react";
 import AuthLink from "./AuthLink";
 import { Button } from "react-bootstrap";
 

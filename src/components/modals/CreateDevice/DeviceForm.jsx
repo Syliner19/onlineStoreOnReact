@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { FormContext } from "./FormContext";
 import { useAddDevice } from "./hooks";
 import { createFormData } from "./helpers";
@@ -14,7 +14,7 @@ const DeviceForm = () => {
   const onSubmit = async (data) => {
     const formData = createFormData(data);
     try {
-      const response = await addDevice(formData);
+      await addDevice(formData);
       reset();
     } catch (e) {
       console.log("Ошибка добавления девайса", e);

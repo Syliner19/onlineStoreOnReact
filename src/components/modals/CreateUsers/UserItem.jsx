@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
 import { CloseButton, ListGroup } from "react-bootstrap";
 import UserRoleDropdown from "./UserRoleDropdown";
-import { CreateUsersContext } from "./CreateUsersContext";
 
 const UserItem = ({ user, onChange, onClick }) => {
   return (

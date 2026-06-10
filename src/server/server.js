@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import ViteExpress from "vite-express";
 import { registration } from "./api/registration.js";
 import {
   ADMIN_ROUTE,

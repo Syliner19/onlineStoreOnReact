@@ -1,4 +1,3 @@
-import { request, response } from "express";
 import { cart, devices } from "../bd.js";
 import { getUserFromSession } from "./helpers.js";
 

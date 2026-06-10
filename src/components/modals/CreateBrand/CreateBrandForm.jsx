@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Modal } from "react-bootstrap";
 
 const CreateBrandForm = ({ onChange }) => {

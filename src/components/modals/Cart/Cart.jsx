@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import {
   useChekedDeviceFromCart,
@@ -13,15 +12,15 @@ import CartEmpty from "./CartEmpty";
 const Cart = ({ onHide }) => {
   const { deleteDevice } = useDeleteDeviceFromCart();
   const { checkDevice } = useChekedDeviceFromCart();
-  const { cart, error, isLoading, trigger, isEmpty } = useGetCart();
+  const { cart, trigger, isEmpty } = useGetCart();
 
   const handleCheckboxChange = async (id) => {
-    const resp = await checkDevice(id);
+    await checkDevice(id);
     trigger();
   };
 
   const handleDeleteDevice = async (id) => {
-    const resp = await deleteDevice(id);
+    await deleteDevice(id);
     trigger();
   };
 

@@ -1,5 +1,4 @@
-import { request, response } from "express";
-import { roles, sessions, users } from "../bd.js";
+import { roles, users } from "../bd.js";
 import { getUserFromSession } from "./helpers.js";
 import { MAIN_URL } from "../../utils/const.js";
 

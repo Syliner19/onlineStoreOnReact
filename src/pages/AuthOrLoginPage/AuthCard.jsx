@@ -1,4 +1,3 @@
-import React from "react";
 import AuthHeader from "./AuthHeader";
 import AuthForm from "./AuthForm";
 import AuthFooter from "./AuthFooter";

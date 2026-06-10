@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  BRANDS_ROUTE,
-  DEVICE_ROUTE,
-  DEVICES_ROUTE,
-  TYPES_ROUTE,
-} from "../utils/const.js";
+import { DEVICE_ROUTE, DEVICES_ROUTE } from "../utils/const.js";
 
 export const getFilteredDevices = async (filters = {}) => {
   const { type, brand } = filters;

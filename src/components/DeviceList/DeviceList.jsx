@@ -1,4 +1,3 @@
-import React from "react";
 import DeviceItem from "../DeviceItem";
 import { Col, Row } from "react-bootstrap";
 import { useGetDevices, useNavidateDevice } from "./hooks";

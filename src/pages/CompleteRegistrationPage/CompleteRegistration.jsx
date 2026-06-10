@@ -1,4 +1,3 @@
-import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { useConfirmPassword, usePasswordValidation } from "./hooks";
 import { useNavigateLogin } from "../AuthOrLoginPage/hooks";

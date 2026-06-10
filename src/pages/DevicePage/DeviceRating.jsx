@@ -1,4 +1,3 @@
-import React from "react";
 import bigStar from "../../assets/bigStar.png";
 import { Row } from "react-bootstrap";
 

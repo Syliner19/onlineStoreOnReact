@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { useGetBrands } from "./modals/CreateBrand/hooks";
 
 const BrandBar = ({ filter, onClick }) => {
-  const { brands, getBrands } = useGetBrands();
+  const { brands } = useGetBrands();
   return (
     <div className="d-flex flex-wrap gap-2">
       {brands.map((brand) => (

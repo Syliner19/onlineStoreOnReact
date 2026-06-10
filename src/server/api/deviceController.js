@@ -1,21 +1,17 @@
-import { request, response } from "express";
 import { brands, devices, types } from "../bd.js";
 import { getUserFromSession } from "./helpers.js";
 const BACKEND_URL = process.env.VITE_APP_API_URL || "http://localhost:3000/";
 export const getDevices = (request, response) => {
   try {
-    return response
-      .status(200)
-      .json({
-        success: true,
-        count: devices.length,
-        devices: getFilteredDevices(request),
-      });
+    return response.status(200).json({
+      success: true,
+      count: devices.length,
+      devices: getFilteredDevices(request),
+    });
   } catch (e) {
-    return (
-      response.status(500),
-      json({ success: false, message: "Ошибка при получении устройств" })
-    );
+    return response
+      .status(500)
+      .json({ success: false, message: `Ошибка при получении устройств,${e}` });
   }
 };
 
@@ -60,10 +56,9 @@ export const getTypes = (request, response) => {
       .status(200)
       .json({ success: true, count: types.length, types });
   } catch (e) {
-    return (
-      response.status(500),
-      json({ success: false, message: "Ошибка при получении типов" })
-    );
+    return response
+      .status(500)
+      .json({ success: false, message: `Ошибка при получении типов, ${e}` });
   }
 };
 export const deleteType = (request, response) => {
@@ -91,7 +86,7 @@ export const deleteType = (request, response) => {
   } catch (e) {
     return response
       .status(500)
-      .json({ success: false, message: "Ошибка при удалении типа" });
+      .json({ success: false, message: `Ошибка при удалении типа,${e}` });
   }
 };
 
@@ -136,7 +131,7 @@ export const deleteBrand = (request, response) => {
   } catch (e) {
     return response
       .status(500)
-      .json({ success: false, message: "Ошибка при удалении бренда" });
+      .json({ success: false, message: `Ошибка при удалении бренда, ${e}` });
   }
 };
 
@@ -146,10 +141,9 @@ export const getBrands = (request, response) => {
       .status(200)
       .json({ success: true, count: brands.length, brands });
   } catch (e) {
-    return (
-      response.status(500),
-      json({ success: false, message: "Ошибка при получении брендов" })
-    );
+    return response
+      .status(500)
+      .json({ success: false, message: `Ошибка при получении брендов,${e}` });
   }
 };
 
@@ -159,12 +153,12 @@ export const addDevice = (request, response) => {
     return response.status(403).json({ message: "Доступ запрещен" });
   }
   const { name, price, rating, type, brand, description } = request.body;
-  let imgURL = "";
-  if (request.file) {
-    imgURL = `${BACKEND_URL}uploads/devices/${request.file.filename}`;
-  } else {
-    imgURL = null;
-  }
+
+  const getImageUrl = () => {
+    if (!request.file) return null;
+    return `${BACKEND_URL}uploads/devices/${request.file.filename}`;
+  };
+
   let parsedDescription = [];
   if (description) {
     parsedDescription = JSON.parse(description);
@@ -174,7 +168,7 @@ export const addDevice = (request, response) => {
     name: name,
     price: Number(price),
     rating: rating ? Number(rating) : 0,
-    img: imgURL,
+    img: getImageUrl(),
     type: type,
     brand: brand,
     description: parsedDescription,

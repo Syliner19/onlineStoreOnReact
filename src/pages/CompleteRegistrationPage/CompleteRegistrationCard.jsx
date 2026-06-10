@@ -1,4 +1,3 @@
-import React from "react";
 import PasswordForm from "./PasswordForm";
 import { Card, Container } from "react-bootstrap";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 const CartEmpty = () => {
   return (
     <div style={{ color: "red" }} className="d-flex justify-content-center">

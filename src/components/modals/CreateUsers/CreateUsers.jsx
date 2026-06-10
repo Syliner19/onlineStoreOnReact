@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import AddUserForm from "./AddUserForm";
 import SearchUsersForm from "./SearchUsersForm";
@@ -12,10 +12,7 @@ const CreateUsers = ({ show, onHide }) => {
     addUser,
     deleteUser,
     searchUsers,
-    setSearchingUsersValue,
-    searchingUsersValue,
     users,
-    roles,
     userName,
     userRole,
     setUserRole,
@@ -40,20 +37,26 @@ const CreateUsers = ({ show, onHide }) => {
       );
       setUserName("");
       setUserRole("Выберите роль");
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
   const handleDeleteUser = async (userId) => {
     try {
       await deleteUser(userId);
       await searchUsers(debouncedSearchingUsersValue);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleChangeRole = async (userId, newRole) => {
     try {
       await updateRole(userId, newRole);
       await searchUsers(debouncedSearchingUsersValue);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

@@ -4,7 +4,6 @@ import { user } from "../http/userAPI";
 export const useUserRole = () => {
   const {
     response = {},
-    error,
     isLoading,
     trigger,
   } = useFetch(user, {

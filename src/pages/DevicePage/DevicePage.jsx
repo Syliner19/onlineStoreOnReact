@@ -1,4 +1,3 @@
-import React from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useAddDevice, useGetDevice } from "./hooks";
@@ -9,12 +8,12 @@ import Loader from "../../components/Loader";
 
 const DevicePage = () => {
   const { id } = useParams();
-  const { device, getDevice, isLoading, error } = useGetDevice(id);
+  const { device, isLoading, error } = useGetDevice(id);
   const { addDevice } = useAddDevice();
 
   const handleAddDeviceToCart = async (deviceId) => {
     try {
-      const response = await addDevice({ deviceId });
+      await addDevice({ deviceId });
     } catch (e) {
       console.error("Error loading cart:", e);
     }

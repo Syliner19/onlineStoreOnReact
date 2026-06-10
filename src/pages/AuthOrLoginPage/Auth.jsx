@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { LOGIN_ROUTE } from "../../utils/const";
@@ -9,7 +9,6 @@ import {
   useRegistration,
 } from "./hooks";
 import AuthCard from "./AuthCard";
-import { useUserRole } from "../../hooks/useUserRole";
 import { UserContext } from "../../context/userContext";
 
 const Auth = () => {

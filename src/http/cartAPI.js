@@ -4,7 +4,6 @@ import {
   CART_ROUTE,
   CART_ROUTE_ADD,
   CART_ROUTE_DELETE,
-  CART_ROUTE_TOGGLE_CHECKBOX_OF_DEVICE,
 } from "../utils/const.js";
 
 export const addDeviceToCart = async ({ deviceId, count = 1 }) => {

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";

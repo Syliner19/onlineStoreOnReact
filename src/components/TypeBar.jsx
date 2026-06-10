@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { useGetTypes } from "./modals/CreateType/hooks";
 
 const TypeBar = ({ filter, onClick }) => {
-  const { types, getTypes } = useGetTypes();
+  const { types } = useGetTypes();
   return (
     <ListGroup>
       {types.map((type) => (

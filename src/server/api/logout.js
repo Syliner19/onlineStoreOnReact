@@ -1,4 +1,4 @@
-import { users, sessions } from "../bd.js";
+import { sessions } from "../bd.js";
 
 export const logout = (request, response) => {
   if (!request.headers.cookie) {

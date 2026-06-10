@@ -1,4 +1,3 @@
-import React from "react";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/const";
 import { NavLink } from "react-router-dom";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Card, Container } from "react-bootstrap";
 
 const SuccessMessage = ({ onClick }) => {

@@ -1,6 +1,5 @@
-import React, { memo, useContext } from "react";
+import { memo } from "react";
 import { CloseButton, ListGroup } from "react-bootstrap";
-import { CreateTypeContext } from "./CreateTypeContext";
 
 const TypeItem = memo(({ onClick, type }) => {
   return (

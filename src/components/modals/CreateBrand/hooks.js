@@ -6,12 +6,12 @@ import {
 } from "../../../http/brandsAPI";
 
 export const useAddBrand = () => {
-  const { response, error, isLoading, trigger } = useFetch(addBrandApi);
+  const { error, isLoading, trigger } = useFetch(addBrandApi);
   return { error, isLoading, addBrand: trigger };
 };
 
 export const useDeleteBrand = () => {
-  const { response, error, isLoading, trigger } = useFetch(deleteBrandApi);
+  const { error, isLoading, trigger } = useFetch(deleteBrandApi);
   return { error, isLoading, deleteBrand: trigger };
 };
 

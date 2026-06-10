@@ -1,5 +1,4 @@
-import React, { createContext } from "react";
-
+import { createContext } from "react";
 import { useUserRole } from "../hooks/useUserRole";
 export const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {

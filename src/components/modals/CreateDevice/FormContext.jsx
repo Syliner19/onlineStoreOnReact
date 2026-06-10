@@ -1,7 +1,5 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { selectBrands, selectTypes } from "../../../store/selectors";
 import { useGetBrands } from "../CreateBrand/hooks";
 import { useGetTypes } from "../CreateType/hooks";
 export const FormContext = createContext(null);

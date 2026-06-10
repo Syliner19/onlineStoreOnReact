@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ListGroup } from "react-bootstrap";
 import UserItem from "./UserItem";
 import { CreateUsersContext } from "./CreateUsersContext";

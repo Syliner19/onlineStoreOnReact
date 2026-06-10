@@ -1,5 +1,4 @@
-import React from "react";
-import { Card, Col, Image } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import star from "../assets/star.png";
 
 const DeviceItem = ({ device, onClick }) => {

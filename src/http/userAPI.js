@@ -11,12 +11,12 @@ import {
 } from "../utils/const.js";
 export const registration = async (email, password) => {
   try {
-    const response = await axios.post(`/api${REGISTRATION_ROUTE}`, {
+    await axios.post(`/api${REGISTRATION_ROUTE}`, {
       email,
       password,
     });
   } catch (e) {
-    console.log("Ошибка");
+    console.log(e);
   }
 };
 export const login = async (email, password) => {

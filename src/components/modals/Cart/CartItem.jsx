@@ -1,4 +1,3 @@
-import React from "react";
 import { CloseButton, Form, Image, ListGroup } from "react-bootstrap";
 
 const CartItem = ({ device, handleCheckboxChange, handleDeleteDevice }) => {
