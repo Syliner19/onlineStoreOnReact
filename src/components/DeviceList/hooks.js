@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../api/hooks/useFetch";
-import { getDevices } from "../../http/deviceAPI";
+import { getFilteredDevices } from "../../http/deviceAPI";
 import { useCallback } from "react";
 import { DEVICE_ROUTE } from "../../utils/const";
 
-export const useGetDevices = () => {
+export const useGetDevices = (filter) => {
+  const getDevices = useCallback(
+    () => getFilteredDevices(filter),
+    [getFilteredDevices, filter],
+  );
   const { response, error, isLoading, trigger } = useFetch(getDevices, {
     autoTrigger: true,
     initialData: [],

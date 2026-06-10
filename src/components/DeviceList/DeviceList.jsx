@@ -4,8 +4,8 @@ import { Col, Row } from "react-bootstrap";
 import { useGetDevices, useNavidateDevice } from "./hooks";
 import Loader from "../Loader";
 
-const DeviceList = () => {
-  const { devices, error, isLoading } = useGetDevices();
+const DeviceList = ({ filter }) => {
+  const { devices, error, isLoading } = useGetDevices(filter);
   const goToDevice = useNavidateDevice();
   if (isLoading && !error) {
     return <Loader />;

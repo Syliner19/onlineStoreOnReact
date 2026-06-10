@@ -6,10 +6,21 @@ import {
   TYPES_ROUTE,
 } from "../utils/const.js";
 
-export const getDevices = async () => {
-  const response = await axios.get(`/api${DEVICES_ROUTE}`);
+export const getFilteredDevices = async (filters = {}) => {
+  const { type, brand } = filters;
+  const params = new URLSearchParams();
+  if (type) {
+    params.append("type", type);
+  }
+  if (brand) {
+    params.append("brand", brand);
+  }
+  const response = await axios.get(
+    `/api${DEVICES_ROUTE}/?${params.toString()}`,
+  );
   return response.data.devices;
 };
+
 export const getDeviceById = async (id) => {
   const response = await axios.get(`/api${DEVICE_ROUTE}/${id}`);
   return response.data.device;

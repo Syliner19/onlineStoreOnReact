@@ -6,13 +6,27 @@ export const getDevices = (request, response) => {
   try {
     return response
       .status(200)
-      .json({ success: true, count: devices.length, devices });
+      .json({
+        success: true,
+        count: devices.length,
+        devices: getFilteredDevices(request),
+      });
   } catch (e) {
     return (
       response.status(500),
       json({ success: false, message: "Ошибка при получении устройств" })
     );
   }
+};
+
+export const getFilteredDevices = (request) => {
+  const { type, brand } = request.query;
+
+  return devices.filter((device) => {
+    return (
+      (!type || device.type === type) && (!brand || device.brand === brand)
+    );
+  });
 };
 
 export const getDevicesById = (request, response) => {
