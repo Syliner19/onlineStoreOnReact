@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../api/hooks/useFetch";
 import { login, logout, registration } from "../../http/userAPI";
-import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../../utils/const";
+import {
+  ADMIN_ROUTE,
+  LOGIN_ROUTE,
+  SHOP_ROUTE,
+  USER_ACCOUNT_ROUTE,
+} from "../../utils/const";
 import { useCallback } from "react";
 
 export const useLogin = () => {
@@ -54,5 +59,12 @@ export const useNavigateAdmin = () => {
 
   return useCallback(() => {
     navigate(ADMIN_ROUTE);
+  }, [navigate]);
+};
+export const useNavigateUserAccount = () => {
+  const navigate = useNavigate();
+
+  return useCallback(() => {
+    navigate(USER_ACCOUNT_ROUTE);
   }, [navigate]);
 };

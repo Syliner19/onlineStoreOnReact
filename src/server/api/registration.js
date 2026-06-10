@@ -10,7 +10,19 @@ export const registration = (request, response) => {
       .status(400)
       .json({ message: "Пользователь с таким email существует" });
   }
-  const newUser = { id: Date.now().toString(), email, password, role: "USER" };
+  const newUser = {
+    id: Date.now().toString(),
+    email,
+    password,
+    role: "USER",
+    description: {
+      firsName: "",
+      secondName: "",
+      age: null,
+      adress: "",
+      img: null,
+    },
+  };
   users.push(newUser);
   return response
     .status(200)

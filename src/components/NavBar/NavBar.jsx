@@ -6,6 +6,7 @@ import {
   useNavigateAdmin,
   useNavigateLogin,
   useNavigateShop,
+  useNavigateUserAccount,
 } from "../../pages/AuthOrLoginPage/hooks";
 import { UserContext } from "../../context/userContext";
 import AuthNav from "./AuthNav";
@@ -18,6 +19,7 @@ const NavBar = memo(({ setCartVisible }) => {
   const goToLogin = useNavigateLogin();
   const goToAdmin = useNavigateAdmin();
   const goToShop = useNavigateShop();
+  const goToUserAccount = useNavigateUserAccount();
 
   const handleLogout = async () => {
     try {
@@ -39,6 +41,7 @@ const NavBar = memo(({ setCartVisible }) => {
             onCartClick={() => setCartVisible(true)}
             onLogoutClick={handleLogout}
             isAdmin={isAdmin}
+            onUserAccountClick={goToUserAccount}
           />
         ) : (
           <GuestNav

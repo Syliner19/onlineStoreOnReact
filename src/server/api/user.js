@@ -45,7 +45,19 @@ export const addUser = (request, response) => {
       .status(401)
       .json({ message: "Пользователь уже существует" });
   }
-  const newUser = { email, password, role, id: Date.now().toString() };
+  const newUser = {
+    email,
+    password,
+    role,
+    id: Date.now().toString(),
+    description: {
+      firsName: "",
+      secondName: "",
+      age: null,
+      adress: "",
+      img: null,
+    },
+  };
   users.push(newUser);
   const { password: _, ...userWithoutPassword } = newUser;
   const registrationLink = `${MAIN_URL}/complete-registration?email=${encodeURIComponent(email)}`;

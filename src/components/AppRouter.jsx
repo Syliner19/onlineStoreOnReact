@@ -5,7 +5,8 @@ import { UserContext } from "../context/userContext";
 
 const AppRouter = () => {
   const { isAuth, isAdmin } = useContext(UserContext);
-
+  console.log(isAuth);
+  console.log("authRoutes:", authRoutes);
   return (
     <Routes>
       {isAuth &&
