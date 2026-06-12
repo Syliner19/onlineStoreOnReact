@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useGetBrands } from "../CreateBrand/hooks";
 import { useGetTypes } from "../CreateType/hooks";
@@ -22,19 +22,31 @@ export const FormProvider = ({ children }) => {
       description: [],
     },
   });
-  useGetBrands();
   const { types } = useGetTypes();
   const { brands } = useGetBrands();
-  const values = {
-    control,
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    reset,
-    errors,
-    types,
-    brands,
-  };
+  const values = useMemo(
+    () => ({
+      control,
+      register,
+      handleSubmit,
+      watch,
+      setValue,
+      reset,
+      errors,
+      types,
+      brands,
+    }),
+    [
+      control,
+      register,
+      handleSubmit,
+      watch,
+      setValue,
+      reset,
+      errors,
+      types,
+      brands,
+    ],
+  );
   return <FormContext.Provider value={values}>{children}</FormContext.Provider>;
 };

@@ -1,39 +1,80 @@
 import { Button, Col, Form, Image, Row } from "react-bootstrap";
-import valinor from "../../assets/Валинор.png";
-import { useState } from "react";
+import FormInputUserAccount from "./FormInputUserAccount";
+import { createFormData } from "../../components/modals/CreateDevice/helpers";
+import { useUserAccountChanger, useUserInfo } from "./hooks";
+import { changeUserInfo } from "../../http/userAPI";
 const UserAccount = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const passwordVisibility = () => {
-    setIsVisible(!isVisible);
+  const {
+    isVisible,
+    setValue,
+    passwordVisibility,
+    register,
+    handleSubmit,
+    errors,
+  } = useUserAccountChanger();
+  const { firstName, secondName, age, adress, img, refresh } = useUserInfo();
+  if (firstName) setValue("firstName", firstName);
+  if (secondName) setValue("secondName", secondName);
+  if (age) setValue("age", age);
+  if (adress) setValue("adress", adress);
+
+  const onSubmit = async (data) => {
+    const formData = createFormData(data);
+    try {
+      console.log(data);
+      await changeUserInfo(formData);
+      await refresh();
+    } catch (e) {
+      console.log("Ошибка внесения изменений", e);
+    }
   };
   return (
     <>
       <Row className="ms-3 pt-3 me-3">
         <Col md={9}>
-          <Form className="d-flex flex-column">
-            <Form.Control
+          <Form
+            onSubmit={handleSubmit(onSubmit)}
+            className="d-flex flex-column"
+            id="change-user-info"
+          >
+            <FormInputUserAccount
               placeholder="Имя"
               className="mt-3"
               label="firstName"
+              errors={errors}
+              register={register}
             />
-            <Form.Control
+            <FormInputUserAccount
               placeholder="Фамилия"
               className="mt-3"
               label="secondName"
+              errors={errors}
+              register={register}
             />
-            <Form.Control
+            <FormInputUserAccount
               placeholder="Возраст"
               className="mt-3"
               type="number"
               label="age"
+              errors={errors}
+              register={register}
+              min={{ value: 0, message: "Возраст не может быть меньше 0" }}
             />
-            <Form.Control placeholder="Адрес" className="mt-3" label="adress" />
-            <Form.Control
+            <FormInputUserAccount
+              placeholder="Адрес"
+              className="mt-3"
+              label="adress"
+              errors={errors}
+              register={register}
+            />
+            <FormInputUserAccount
               placeholder="Аватар"
               className="mt-3"
               type="file"
               accept="image/*"
               label="img"
+              errors={errors}
+              register={register}
             />
           </Form>
         </Col>
@@ -41,10 +82,15 @@ const UserAccount = () => {
           md={3}
           className="d-flex align-items-center justify-content-center"
         >
-          <Image width="100%" height="80%" src={valinor} />
+          <Image width="100%" height="80%" src={img} />
         </Col>
         <div className="d-flex justify-content-center align-items-center mt-3 pl-3 pr-3">
-          <Button variant={"outline-success"} className="mt-3">
+          <Button
+            variant={"outline-success"}
+            className="mt-3"
+            form="change-user-info"
+            type="submit"
+          >
             Сохранить изменения
           </Button>
         </div>

@@ -14,6 +14,7 @@ const DeviceForm = () => {
   const onSubmit = async (data) => {
     const formData = createFormData(data);
     try {
+      console.log(data);
       await addDevice(formData);
       reset();
     } catch (e) {

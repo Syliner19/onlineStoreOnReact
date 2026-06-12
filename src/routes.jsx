@@ -26,7 +26,6 @@ export const publicRoutes = [
   { path: REGISTRATION_ROUTE, element: <Auth /> },
   { path: LOGIN_ROUTE, element: <Auth /> },
   { path: COMPLETE_REGISTRATION_ROUTE, element: <CompleteRegistration /> },
-  { path: USER_ACCOUNT_ROUTE, element: <UserAccount /> },
 ];
 export const adminRoutes = [
   { path: ADMIN_ROUTE, element: <AdminPage /> },

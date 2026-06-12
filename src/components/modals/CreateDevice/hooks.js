@@ -1,13 +1,13 @@
+import { useWatch } from "react-hook-form";
 import { useFetch } from "../../../api/hooks/useFetch";
 import { createNewDevice } from "../../../http/deviceAPI";
 
-export const useDescription = (watch, setValue) => {
-  const description = watch("description");
+export const useDescription = (control, setValue) => {
+  const description = useWatch({ control, name: "description" });
 
   const addDescription = () => {
-    const currentDescription = watch("description");
     setValue("description", [
-      ...currentDescription,
+      ...description,
       {
         title: "",
         value: "",
@@ -17,23 +17,20 @@ export const useDescription = (watch, setValue) => {
   };
 
   const removeDescription = (id) => {
-    const currentDescription = watch("description");
-    const descriptionWithoutDeleted = currentDescription.filter(
+    const descriptionWithoutDeleted = description.filter(
       (desc) => desc.id !== id,
     );
     setValue("description", descriptionWithoutDeleted);
   };
 
   const updateTitleDesctiption = (id, value) => {
-    const currentDescription = watch("description");
-    const updated = currentDescription.map((desc) =>
+    const updated = description.map((desc) =>
       desc.id === id ? { ...desc, title: value } : desc,
     );
     setValue("description", updated);
   };
   const updateValueDesctiption = (id, value) => {
-    const currentDescription = watch("description");
-    const updated = currentDescription.map((desc) =>
+    const updated = description.map((desc) =>
       desc.id === id ? { ...desc, value: value } : desc,
     );
     setValue("description", updated);

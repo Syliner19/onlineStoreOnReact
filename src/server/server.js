@@ -38,13 +38,14 @@ import {
 import {
   addUser,
   changeRole,
+  changeUsersInformation,
   completeRegistration,
   deleteUser,
   getRoles,
   getUser,
   searchUsers,
 } from "./api/user.js";
-import upload from "./uploads/multerConfig.js";
+import { uploadDevice, uploadUsersAvatar } from "./uploads/multerConfig.js";
 import {
   addDeviceToCart,
   changeCheckboxForDevice,
@@ -79,7 +80,12 @@ app.delete(`/api${TYPES_ROUTE}/:id`, deleteType);
 app.post(`/api${BRANDS_ROUTE}`, addBrand);
 app.get(`/api${BRANDS_ROUTE}`, getBrands);
 app.delete(`/api${BRANDS_ROUTE}`, deleteBrand);
-app.post(`/api${DEVICES_ROUTE}`, upload.single("img"), addDevice);
+app.post(`/api${DEVICES_ROUTE}`, uploadDevice.single("img"), addDevice);
+app.patch(
+  `/api${USERS_ROUTE}`,
+  uploadUsersAvatar.single("img"),
+  changeUsersInformation,
+);
 app.get(`/api${ROLES_ROUTE}`, getRoles);
 app.post(`/api${USER_ROUTE}`, addUser);
 app.post(`/api${COMPLETE_REGISTRATION_ROUTE}`, completeRegistration);

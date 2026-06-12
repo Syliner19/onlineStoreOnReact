@@ -2,6 +2,8 @@ import { roles, users } from "../bd.js";
 import { getUserFromSession } from "./helpers.js";
 import { MAIN_URL } from "../../utils/const.js";
 
+const BACKEND_URL = process.env.VITE_APP_API_URL || "http://localhost:3000/";
+
 export const getUser = (request, response) => {
   const user = getUserFromSession(request);
   if (!user) {
@@ -13,7 +15,12 @@ export const getUser = (request, response) => {
   }
   return response.status(200).json({
     success: true,
-    user: { id: user.id, email: user.email, role: user.role },
+    user: {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      description: user.description,
+    },
   });
 };
 export const getRoles = (request, response) => {
@@ -51,7 +58,7 @@ export const addUser = (request, response) => {
     role,
     id: Date.now().toString(),
     description: {
-      firsName: "",
+      firstName: "",
       secondName: "",
       age: null,
       adress: "",
@@ -59,6 +66,7 @@ export const addUser = (request, response) => {
     },
   };
   users.push(newUser);
+  // eslint-disable-next-line no-unused-vars
   const { password: _, ...userWithoutPassword } = newUser;
   const registrationLink = `${MAIN_URL}/complete-registration?email=${encodeURIComponent(email)}`;
   return response.status(200).json({
@@ -68,6 +76,47 @@ export const addUser = (request, response) => {
     registrationLink,
   });
 };
+
+export const changeUsersInformation = (request, response) => {
+  const user = getUserFromSession(request);
+  if (!user) {
+    return response.status(403).json({ message: "Доступ запрещен" });
+  }
+  const { firstName, secondName, age, adress } = request.body;
+
+  const getImageUrl = () => {
+    if (!request.file) return null;
+    return `${BACKEND_URL}uploads/usersAvatars/${request.file.filename}`;
+  };
+
+  const changedUser = {
+    ...user,
+    description: {
+      firstName:
+        user.description.firstName === firstName
+          ? user.description.firstName
+          : firstName,
+      secondName:
+        user.description.secondName === secondName
+          ? user.description.secondName
+          : secondName,
+      age: user.description.age === age ? user.description.age : age,
+      adress:
+        user.description.adress === adress ? user.description.adress : adress,
+      img: getImageUrl(),
+    },
+  };
+  const userIndex = users.findIndex((u) => u.id === user.id);
+  if (userIndex !== -1) {
+    users[userIndex] = changedUser;
+  }
+  return response.status(201).json({
+    success: true,
+    message: "Данные пользователя обновлены успешно",
+    user: changedUser,
+  });
+};
+
 export const completeRegistration = (request, response) => {
   const { email } = request.query;
   const { password } = request.body;
@@ -134,6 +183,7 @@ export const deleteUser = (request, response) => {
   }
   const deletedUser = users[userIndex];
   users.splice(userIndex, 1);
+  // eslint-disable-next-line no-unused-vars
   const { password, ...userWithoutPassword } = deletedUser;
   return response.status(200).json({
     success: true,

@@ -1,13 +1,19 @@
 export const createFormData = (data) => {
   const formData = new FormData();
-  formData.append("name", data.name);
-  formData.append("price", data.price);
-  formData.append("rating", data.rating);
-  formData.append("type", data.type);
-  formData.append("brand", data.brand);
-  formData.append("description", JSON.stringify(data.description));
-  if (data.img && data.img[0]) {
-    formData.append("img", data.img[0]);
-  }
+  Object.keys(data).forEach((key) => {
+    const value = data[key];
+    if (value === null || value === undefined) {
+      return;
+    }
+    if (value instanceof FileList || key === "img") {
+      if (value.length > 0) {
+        formData.append(key, value[0]);
+      }
+    } else if (typeof value === "object" && !(value instanceof File)) {
+      formData.append(key, JSON.stringify(value));
+    } else {
+      formData.append(key, String(value));
+    }
+  });
   return formData;
 };

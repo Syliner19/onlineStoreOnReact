@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useDescription } from "./hooks";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FormContext } from "./FormContext";
 
 const DescriptionField = () => {
-  const { setValue, watch } = useContext(FormContext);
+  const { setValue, control } = useContext(FormContext);
   const {
     description,
     addDescription,
     removeDescription,
     updateTitleDesctiption,
     updateValueDesctiption,
-  } = useDescription(watch, setValue);
+  } = useDescription(control, setValue);
 
   return (
     <>
@@ -19,7 +19,7 @@ const DescriptionField = () => {
         Добавить новое свойство
       </Button>
       {description.map((i, index) => (
-        <Row className="mt-3" key={i.id}>
+        <Row className="mt-3" key={index}>
           <Col md={4}>
             <Form.Control
               placeholder="Введите название свойства"

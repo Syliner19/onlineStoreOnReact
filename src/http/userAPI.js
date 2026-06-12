@@ -32,6 +32,13 @@ export const user = async () => {
   return axios.get(`/api${USER_ROUTE}`).then((response) => response.data);
 };
 
+export const changeUserInfo = async (formData) => {
+  const response = await axios.patch(`/api${USERS_ROUTE}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return response.data.user;
+};
+
 export const fetchRoles = async () => {
   return axios
     .get(`/api${ROLES_ROUTE}`)

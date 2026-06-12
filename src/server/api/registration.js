@@ -16,7 +16,7 @@ export const registration = (request, response) => {
     password,
     role: "USER",
     description: {
-      firsName: "",
+      firstName: "",
       secondName: "",
       age: null,
       adress: "",
